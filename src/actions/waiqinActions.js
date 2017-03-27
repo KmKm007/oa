@@ -1,7 +1,8 @@
-import * as waiqinActionTypes from '../actionTypes/waiqinActionTypes'
+import actionTypes from '../actionTypes'
+import { }
 
 export const requestLocation = () => ({
-  type: waiqinActionTypes.REQUEST_LOCATION
+  type: actionTypes.REQUEST_LOCATION
 })
 
 export const fetchLocation = () => dispatch => {
@@ -10,12 +11,12 @@ export const fetchLocation = () => dispatch => {
 }
 
 export const receiveLocation = location => ({
-  type: waiqinActionTypes.RECEIVE_LOCATION,
+  type: actionTypes.RECEIVE_LOCATION,
   location
 })
 
 export const requestAddress = location => ({
-  type: waiqinActionTypes.REQUEST_ADDRESS,
+  type: actionTypes.REQUEST_ADDRESS,
   location
 })
 
@@ -25,6 +26,6 @@ export const fetchAddress = location => dispatch => {
 }
 
 export const receiveAddress = address => ({
-  type: waiqinActionTypes.RECEIVE_ADDRESS,
+  type: actionTypes.RECEIVE_ADDRESS,
   address
 })
