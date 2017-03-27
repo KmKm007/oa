@@ -15,8 +15,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const store = createStore(reducers, applyMiddleware(...middleWare))
 
-console.log(store.getState())
-
 ReactDOM.render(
   <Provider store={store}>
     <AppRouter />
