@@ -1,7 +1,9 @@
 import * as waiqinActionTypes from './waiqinActionTypes'
+import * as userActionTypes from './userActionTypes'
 
 const types = {
-  ...waiqinActionTypes
+  ...waiqinActionTypes,
+  ...userActionTypes
 }
 
 export default types
