@@ -1,7 +1,7 @@
 import fetch from 'whatwg-fetch'
 
 export const getSignature = callback => {
-  const url = 'http://10.17.1.157:8888/OA/jssdk/getSignature'
+  const url = 'http://10.17.1.157:8888/OA/wx/getSignature'
   fetch(url, {
     method: 'GET',
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -13,7 +13,7 @@ export const getSignature = callback => {
 }
 
 export const postCodeToServer = (code, callback) => {
-  const url = 'http://10.17.1.157:8888/OA/jssdk/getUserId?code=' + code
+  const url = 'http://10.17.1.157:8888/OA/wx/getUserId?code=' + code
   fetch(url, {
     method: 'GET',
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
