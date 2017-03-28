@@ -1,6 +1,6 @@
 import fetch from 'whatwg-fetch'
 
-export const getSignature = callback => {
+export const getWxConfig = callback => {
   const url = 'http://10.17.1.157:8888/OA/wx/getSignature'
   fetch(url, {
     method: 'GET',
@@ -31,6 +31,7 @@ export const postCodeToServer = (code, callback) => {
 }
 
 export const getAddress = (location, callback) => {
+  const { longitude, latitude } = location
   const url = 'http://10.17.1.157:8888/OA/amap/getAddress?' + 'longitude=' + longitude + '&latitude=' + latitude
   fetch(url, {
     method: 'GET',

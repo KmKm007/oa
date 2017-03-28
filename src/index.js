@@ -6,6 +6,10 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducers from './reducers'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+require('./styles/App.css')
+
+injectTapEventPlugin()
 
 const middleWare = [ thunk ]
 

@@ -1,7 +1,12 @@
 /* Base Application Styles */
 body {
-  color: #fff;
-  background: #222;
+  color: #333333;
+  background: #eeeeee;
+  margin: 0;
+}
+
+#app {
+
 }
 
 .index img {
@@ -18,4 +23,84 @@ body {
   border: 1px solid #000;
   border-width: 1px 0;
   background: #666;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Microsoft yahei';
+}
+
+.header {
+  display: flex;
+  background-color: #ae0000;
+  color: #ffffff;
+}
+
+.headerLeftContainter, .headerRightContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerMiddleContainer {
+  flex-grow: 3;
+  font-weight: 400;
+}
+
+.headerLeftContainter, .headerMiddleContainer, .headerRightContainer {
+  margin: 15px 0;
+}
+
+.time-container {
+  flex-grow: 2;
+  flex-direction: column;
+}
+
+.sign-container {
+  flex-grow: 3;
+  flex-direction: column;
+}
+
+.sign-body {
+  width: 33vw;
+  height: 33vw;
+  border-radius: 33vw;
+  border: 5px solid red;
+}
+
+.sign-button {
+  width: 50vw;
+}
+
+.sign-footer {
+  margin-top: 10px;
+}
+
+.address-container {
+  flex-direction: column;
+  flex-grow: 2;
+}
+
+.flex-center-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.time-text {
+  font-size: 3rem;
+  font-family: "Aharoni";
+  font-weight: bold;
+}
+
+.date-text {
+  font-size: 1rem;
+  color: #797979;
 }

@@ -1,5 +1,6 @@
 import actionTypes from '../actionTypes'
 import { getAddress } from '../middleWares/api'
+import { getLocation } from '../middleWares/wxSDK'
 
 export const requestLocation = () => ({
   type: actionTypes.REQUEST_LOCATION
@@ -7,7 +8,9 @@ export const requestLocation = () => ({
 
 export const fetchLocation = () => dispatch => {
   requestLocation()
-
+  getLocation(location => {
+    dispatch(receiveLocation(location))
+  })
 }
 
 export const receiveLocation = location => ({

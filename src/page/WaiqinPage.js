@@ -1,16 +1,92 @@
-import App from '../components/Main'
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import cs from 'classnames'
+import actions from '../actions'
 
-class WaiqinPage extends React.component {
-  static propTypes = {
-    userId: PropTypes.string.isRequired
+const signButtonURL = require('../images/sign.png')
+
+class WaiqinPage extends React.Component {
+  constructor(props) {
+      super(props)
   }
 
+  static propTypes = {
+    handleSign: PropTypes.func.isRequired,
+    initialWxSDK: PropTypes.func.isRequired
+  }
+
+  static defaultProps = {
+    title: '东莞中原外勤签到'
+  }
+
+  componentWillMount() {
+    document.title = this.props.title
+  }
+
+  componentDidMount() {
+    this.props.initialWxSDK()
+  }
+
+  render() {
+    const { title } = this.props
+    const { handleSign } = this.props
+    return (
+      <div className="container">
+        <div className="header">
+          <div className={cs('text-center', 'headerLeftContainter')}>返回</div>
+          <h2 className={cs('text-center', 'headerMiddleContainer')}>{title}</h2>
+          <div className={cs('text-center', 'headerRightContainer')}>菜单</div>
+        </div>
+        <div className={cs('time-container', 'flex-center-container')}>
+          <div>
+            <span className="time-text">14:30</span>
+          </div>
+          <div>
+            <span className="date-text">2017年3月23日</span>
+          </div>
+        </div>
+        <div className={cs('sign-container', 'flex-center-container')}>
+          <img className="sign-button" src={signButtonURL} onClick={handleSign}/>
+          <div className="sign-footer">
+            <span>添加备注...</span>
+          </div>
+        </div>
+        <div className={cs('address-container', 'flex-center-container')}>
+          <span>
+            胜和路10号
+          </span>
+          <span>
+            东莞市南城区胜和路
+          </span>
+        </div>
+      </div>
+    )
+  }
 }
 
 const stateToProps = state => ({
-  userId: state.user.userId
+  userId: state.user.userId,
+  wxConfig: {
+    corpid: state.wx.corpid,
+    nonceStr: state.wx.nonceStr,
+    signature: state.wx.signature,
+    url: state.wx.url,
+    timestamp: state.wx.url
+  },
+  isInitialSucceed: state.wx.isInitialSucceed,
+  isWxConfigLoading: state.wx.isWxConfigLoading
 })
 
-export default connect(stateToProps)(WaiqinPage)
+const dispatchToProps = dispatch => ({
+  initialWxSDK: () => {
+    dispatch(actions.wxFetchInitial())
+  },
+  initialWxConfig: config => {
+    dispatch
+  },
+  handleSign: () => {
+    const currentTime = Date.now()
+  }
+})
+
+export default connect(stateToProps, dispatchToProps)(WaiqinPage)

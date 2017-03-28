@@ -1,6 +1,6 @@
 import wx from 'weixin-js-sdk'
 
-export const inital => (config, callback) => {
+export const inital = (config, callback) => {
   wx.config({
     debug: false,
     appId: config.corpid,
@@ -23,8 +23,8 @@ export const getLocation = callback => {
 
 export const showLocation = locationConfig => {
   wx.openLocation({
-    latitude: locationConfig.latitude // 纬度，浮点数，范围为90 ~ -90
-    longitude: locationConfig.longitude // 经度，浮点数，范围为180 ~ -180。
+    latitude: locationConfig.latitude, // 纬度，浮点数，范围为90 ~ -90
+    longitude: locationConfig.longitude, // 经度，浮点数，范围为180 ~ -180。
     name: locationConfig.name, // 位置名
     address: locationConfig.address, // 地址详情说明
     scale: locationConfig.scale // 地图缩放级别,整形值,范围从1~28。默认为16
