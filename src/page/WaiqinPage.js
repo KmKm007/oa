@@ -1,10 +1,16 @@
 import App from '../components/Main'
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 
-const waiqin = () => (
-  <div>
-    <App />
-  </div>
-)
+class WaiqinPage extends React.component {
+  static propTypes = {
+    userId: PropTypes.string.isRequired
+  }
 
-export default waiqin
+}
+
+const stateToProps = state => ({
+  userId: state.user.userId
+})
+
+export default connect(stateToProps)(WaiqinPage)

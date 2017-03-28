@@ -31,3 +31,8 @@ export const receiveAddress = address => ({
   type: actionTypes.RECEIVE_ADDRESS,
   address
 })
+
+export const updateCurrentTime = currentTime => ({
+  type: actionTypes.UPDATE_CURRENTTIME,
+  currentTime
+})
