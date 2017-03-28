@@ -1,7 +1,9 @@
-import fetch from 'whatwg-fetch'
+import 'whatwg-fetch'
+
+console.log(fetch)
 
 export const getWxConfig = callback => {
-  const url = 'http://10.17.1.157:8888/OA/wx/getSignature'
+  const url = 'http://10.17.1.157:8888/OA/wx/getWxConfig'
   fetch(url, {
     method: 'GET',
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'

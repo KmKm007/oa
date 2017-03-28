@@ -12,7 +12,8 @@ class WaiqinPage extends React.Component {
 
   static propTypes = {
     handleSign: PropTypes.func.isRequired,
-    initialWxSDK: PropTypes.func.isRequired
+    initialWxSDK: PropTypes.func.isRequired,
+    fetchWxConfig: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -24,7 +25,7 @@ class WaiqinPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.initialWxSDK()
+    this.props.fetchWxConfig()
   }
 
   render() {
@@ -78,11 +79,14 @@ const stateToProps = state => ({
 })
 
 const dispatchToProps = dispatch => ({
+  fetchWxConfig: () => {
+    dispatch(actions.fetchWxConfig())
+  },
   initialWxSDK: () => {
     dispatch(actions.wxFetchInitial())
   },
   initialWxConfig: config => {
-    dispatch
+    dispatch(actions.wxFetchInitial(config))
   },
   handleSign: () => {
     const currentTime = Date.now()
