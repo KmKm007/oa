@@ -1,0 +1,3 @@
+export const WX_INITIAL = 'WX_INITIAL'
+
+export const WX_INITIAL_SUCCEED = 'WX_INITIAL_SUCCEED'

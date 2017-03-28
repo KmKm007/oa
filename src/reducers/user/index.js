@@ -1,33 +1,42 @@
 import actionTypes from '../../actionTypes'
 
-const initalState = {
+const initialState = {
   userCode: null,
   userId: null,
-  name: null
+  name: null,
+  isUserCodeLoading: null,
+  isUserDetailLoading: null
 }
 
 const receiveUserCode = (state, action) => {
   return {
     ...state,
-    userCode: action.userCode
+    userCode: action.userCode,
+    isUserCodeLoading: false
   }
 }
 
-const requestUserDetail = (state, action) => {
-  return state
+const requestUserDetail = state => {
+  return {
+    ...state,
+    isUserDetailLoading: true
+  }
 }
 
 const receiveUserDetail = (state, action) => {
   return {
     ...state,
-    name: action.userDetail.name
+    name: action.userDetail.name,
+    isUserDetailLoading: false
   }
 }
 
-const userReducer = (state = initalState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.RECEIVE_USER_CODE:
       return receiveUserCode(state, action)
+    case actionTypes.REQUEST_USER_DETAIL:
+      return requestUserDetail(state)
     case actionTypes.RECEIVE_USER_DETAIL:
       return receiveUserDetail(state, action)
     default:

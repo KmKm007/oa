@@ -1,4 +1,5 @@
 import actionTypes from '../actionTypes/'
+import { getUserDetail } from '../middleWares/api'
 
 export const receiveUserCode = userCode => ({
   type: actionTypes.RECEIVE_USER_CODE,
@@ -12,6 +13,9 @@ export const requestUserDetail = userCode => ({
 
 export const fetchUserDetail = userCode => dispatch => {
   dispatch(requestUserDetail)
+  getUserDetail(userCode, userDetail => {
+    dispatch(receiveUserDetail(userDetail))
+  })
 }
 
 export const receiveUserDetail = userDetail => ({

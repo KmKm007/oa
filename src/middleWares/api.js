@@ -41,3 +41,21 @@ export const getAddress = (location, callback) => {
     callback(json.location)
   })
 }
+
+export const getUserDetail = (code, callback) => {
+  const url = 'http://10.17.1.157:8888/OA/wx/getUserDetail?code=' + code
+  fetch(url, {
+    method: 'GET',
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+  })
+  .then(resp => {
+    if (resp.ok && resp.status === 200) {
+      resp.json()
+    } else {
+      console.log('请求失败！')
+    }
+  })
+  .then(json => {
+    callback(json)
+  })
+}

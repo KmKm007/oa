@@ -1,5 +1,5 @@
 import actionTypes from '../actionTypes'
-import { }
+import { getAddress } from '../middleWares/api'
 
 export const requestLocation = () => ({
   type: actionTypes.REQUEST_LOCATION
@@ -22,7 +22,9 @@ export const requestAddress = location => ({
 
 export const fetchAddress = location => dispatch => {
   requestAddress(location)
-
+  getAddress(location, address => {
+    dispatch(receiveAddress(address))
+  })
 }
 
 export const receiveAddress = address => ({

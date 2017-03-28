@@ -4,7 +4,7 @@ import WaiqinPage from '../page/WaiqinPage'
 
 const AppRouter = () => (
   <Router history={hashHistory}>
-      <route path="/" component={WaiqinPage} />
+      <Route path="/" component={WaiqinPage} />
   </Router>
 )
 
