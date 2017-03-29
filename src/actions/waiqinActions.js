@@ -7,7 +7,7 @@ export const requestLocation = () => ({
 })
 
 export const fetchLocation = () => dispatch => {
-  requestLocation()
+  dispatch(requestLocation())
   getLocation(location => {
     dispatch(receiveLocation(location))
   })
@@ -24,15 +24,15 @@ export const requestAddress = location => ({
 })
 
 export const fetchAddress = location => dispatch => {
-  requestAddress(location)
-  getAddress(location, address => {
-    dispatch(receiveAddress(address))
+  dispatch(requestAddress(location))
+  getAddress(location, nextLocation => {
+    dispatch(receiveAddress(nextLocation))
   })
 }
 
-export const receiveAddress = address => ({
+export const receiveAddress = location => ({
   type: actionTypes.RECEIVE_ADDRESS,
-  address
+  location
 })
 
 export const updateCurrentTime = currentTime => ({
