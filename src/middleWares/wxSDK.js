@@ -1,4 +1,5 @@
 import wx from 'weixin-js-sdk'
+import { getQueryString } from '../utils/urlUtil'
 
 export const inital = (config, callback) => {
   wx.config({
@@ -7,11 +8,17 @@ export const inital = (config, callback) => {
     timestamp: config.timestamp,
     nonceStr: config.nonceStr,
     signature: config.signature,
-    jsApiList: config.jsApiList
+    // jsApiList: config.jsApiList,
+    jsApiList: ['getLocation', 'openLocation']
   })
   wx.ready(() => {
     callback()
   })
+}
+
+export const getUserCode = callback => {
+  const userCode = getQueryString('code')
+  callback(userCode)
 }
 
 export const getLocation = callback => {

@@ -59,6 +59,6 @@ export const getUserDetail = (code, callback) => {
     }
   })
   .then(json => {
-    callback(json)
+    callback(json.userId)
   })
 }
