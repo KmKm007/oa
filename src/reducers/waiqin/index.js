@@ -14,9 +14,10 @@ const receiveLocation = (state, action) => {
 }
 
 const receiveAddress = (state, action) => {
+  const address = action.location.address
   return {
     ...state,
-    address: action.address
+    address
   }
 }
 
