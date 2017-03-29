@@ -1,5 +1,17 @@
 import actionTypes from '../actionTypes/'
 import { getUserDetail } from '../middleWares/api'
+import { getUserCode } from '../middleWares/wxSDK'
+
+export const requestUserCode = () => ({
+  type: actionTypes.REQUEST_USER_CODE
+})
+
+export const fetchUserCode = () => dispatch => {
+  dispatch(requestUserCode())
+  getUserCode(userCode => {
+    dispatch(receiveUserCode(userCode))
+  })
+}
 
 export const receiveUserCode = userCode => ({
   type: actionTypes.RECEIVE_USER_CODE,
@@ -12,7 +24,7 @@ export const requestUserDetail = userCode => ({
 })
 
 export const fetchUserDetail = userCode => dispatch => {
-  dispatch(requestUserDetail)
+  dispatch(requestUserDetail(userCode))
   getUserDetail(userCode, userDetail => {
     dispatch(receiveUserDetail(userDetail))
   })
