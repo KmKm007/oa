@@ -39,7 +39,8 @@ const receiveWxConfig = (state, action) => {
     corpid: config.corpid,
     timestamp: config.timestamp,
     nonceStr: config.nonceStr,
-    signature: config.signature
+    signature: config.signature,
+    url: config.url
   }
 }
 
