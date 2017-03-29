@@ -1,6 +1,6 @@
 export const SIGN_IN = 'SIGN_IN'
 
-export const REQUEST_LOCATION = 'GET_LOCATION'
+export const REQUEST_LOCATION = 'REQUEST_LOCATION'
 
 export const FETCH_LOCATION = 'FETCH_LOCATION'
 
