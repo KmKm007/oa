@@ -1,10 +1,13 @@
 import React from 'react'
-import { Router, Route, hashHistory } from 'react-router'
-import WaiqinPage from '../page/WaiqinPage'
+import { Router, Route, hashHistory, Redirect } from 'react-router'
+import SignPage from '../page/waiqin/SignPage'
+import SignSucceedPage from '../page/waiqin/SignSucceedPage'
 
 const AppRouter = () => (
   <Router history={hashHistory}>
-      <Route path="/" component={WaiqinPage} />
+      <Route path="/waiqin/sign" component={SignPage}/>
+      <Route path="/waiqin/signSucceed" component={SignSucceedPage}/>
+      <Redirect from="/" to="/waiqin/sign" />
   </Router>
 )
 
