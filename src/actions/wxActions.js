@@ -7,7 +7,7 @@ export const wxInitial = () => ({
 })
 
 export const wxFetchInitial = config => dispatch => {
-  dispatch(wxInitial)
+  dispatch(wxInitial())
   inital(config, () => {
     dispatch(wxInitialSucceed())
   })
@@ -30,5 +30,6 @@ export const fetchWxConfig = () => dispatch => {
   dispatch(requestWxConfig())
   getWxConfig(config => {
     dispatch(receiveWxConfig(config))
+    dispatch(wxFetchInitial(config))
   })
 }
