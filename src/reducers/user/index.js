@@ -2,8 +2,7 @@ import actionTypes from '../../actionTypes'
 
 const initialState = {
   userCode: null,
-  userId: null,
-  name: null,
+  detail: null,
   isUserCodeLoading: null,
   isUserDetailLoading: null
 }
@@ -16,17 +15,32 @@ const receiveUserCode = (state, action) => {
   }
 }
 
-const requestUserDetail = state => {
+const requestUserDetailByCode = state => {
   return {
     ...state,
     isUserDetailLoading: true
   }
 }
 
-const receiveUserDetail = (state, action) => {
+const receiveUserDetailByCode = (state, action) => {
   return {
     ...state,
-    name: action.userDetail.name,
+    detail: action.userDetail,
+    isUserDetailLoading: false
+  }
+}
+
+const requestUserDetailById = state => {
+  return {
+    ...state,
+    isUserDetailLoading: true
+  }
+}
+
+const receiveUserDetailById = (state, action) => {
+  return {
+    ...state,
+    detail: action.userDetail,
     isUserDetailLoading: false
   }
 }
@@ -35,10 +49,14 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.RECEIVE_USER_CODE:
       return receiveUserCode(state, action)
-    case actionTypes.REQUEST_USER_DETAIL:
-      return requestUserDetail(state)
-    case actionTypes.RECEIVE_USER_DETAIL:
-      return receiveUserDetail(state, action)
+    case actionTypes.REQUEST_USER_DETAIL_BY_CODE:
+      return requestUserDetailByCode(state)
+    case actionTypes.RECEIVE_USER_DETAIL_BY_CODE:
+      return receiveUserDetailByCode(state, action)
+    case actionTypes.REQUEST_USER_DETAIL_BY_ID:
+      return requestUserDetailById(state, action)
+    case actionTypes.RECEIVE_USER_DETAIL_BY_ID:
+      return receiveUserDetailById(state, action)
     default:
       return state
   }

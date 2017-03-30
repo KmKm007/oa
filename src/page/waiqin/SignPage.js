@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import cs from 'classnames'
 import actions from '../../actions'
 import Loading from '../../components/Loading'
+import 'vconsole'
 
 const signButtonURL = require('../../images/sign.png')
 
@@ -28,33 +29,46 @@ class WaiqinPage extends React.Component {
 
   componentDidMount() {
     this.props.fetchWxConfig()
-    this.props.fetchUserCode()
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
+      this.props.fetchUserCode()
+    } else {
+      this.props.fetchUserDetailById(userId)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const {
       isInitialSucceed: currentIsInitialSucceed,
       location: currentLocation,
-      userCode: currentUserCode
+      userCode: currentUserCode,
+      userDetail: currentUserDetail
     } = this.props
     const {
       isInitialSucceed: nextIsInitialSucceed,
       location: nextLocation,
-      userCode: nextUserCode
+      userCode: nextUserCode,
+      userDetail: nextUserDetail
     } = nextProps
+
     const {
-      fetchUserDetail,
+      fetchUserDetailByCode,
       fetchLocation,
       fetchAddress
     } = this.props
+
     if (currentUserCode !== nextUserCode) {
-      fetchUserDetail(nextUserCode)
+      fetchUserDetailByCode(nextUserCode)
     }
     if (currentIsInitialSucceed !== nextIsInitialSucceed) {
       fetchLocation()
     }
     if (currentLocation !== nextLocation) {
       fetchAddress(nextLocation)
+    }
+    if (nextUserDetail && !nextUserCode && currentUserDetail !== nextUserDetail) {
+      localStorage.setItem('userId', nextUserDetail.userId)
+      localStorage.setItem('userIdUpdateTime', Date.now())
     }
   }
 
@@ -104,7 +118,7 @@ class WaiqinPage extends React.Component {
 
 const stateToProps = state => ({
   userCode: state.user.userCode,
-  userId: state.user.userId,
+  userDetail: state.user.detail,
   wxConfig: {
     corpid: state.wx.corpid,
     nonceStr: state.wx.nonceStr,
@@ -140,8 +154,11 @@ const dispatchToProps = dispatch => ({
   fetchAddress: location => {
     dispatch(actions.fetchAddress(location))
   },
-  fetchUserDetail: userCode => {
-    dispatch(actions.fetchUserDetail(userCode))
+  fetchUserDetailByCode: userCode => {
+    dispatch(actions.fetchUserDetailByCode(userCode))
+  },
+  fetchUserDetailById: userId => {
+    dispatch(actions.fetchUserDetailById(userId))
   }
 })
 

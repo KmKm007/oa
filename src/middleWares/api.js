@@ -1,7 +1,5 @@
 import 'whatwg-fetch'
 
-console.log(fetch)
-
 export const getWxConfig = callback => {
   const url = 'http://10.17.1.157:8888/OA/wx/getWxConfig'
   fetch(url, {
@@ -45,20 +43,26 @@ export const getAddress = (location, callback) => {
   })
 }
 
-export const getUserDetail = (code, callback) => {
-  const url = 'http://10.17.1.157:8888/OA/wx/getUserDetail?code=' + code
+export const getUserDetailByCode = (code, callback) => {
+  const url = 'http://10.17.1.157:8888/OA/wx/getUserDetailByCode?code=' + code
   fetch(url, {
     method: 'GET',
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
   })
-  .then(resp => {
-    if (resp.ok && resp.status === 200) {
-      resp.json()
-    } else {
-      console.log('请求失败！')
-    }
-  })
+  .then(resp => resp.json())
   .then(json => {
-    callback(json.userId)
+    callback(json.user)
+  })
+}
+
+export const getUserDetailById = (userId, callback) => {
+  const url = 'http://10.17.1.157:8888/OA/wx/getUserDetailById?userId=' + userId
+  fetch(url, {
+    method: 'GET',
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+  })
+  .then(resp => resp.json())
+  .then(json => {
+    callback(json.user)
   })
 }
