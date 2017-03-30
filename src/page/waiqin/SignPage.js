@@ -3,10 +3,12 @@ import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import cs from 'classnames'
 import actions from '../../actions'
+import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import Loading from '../../components/Loading'
 import 'vconsole'
 
 const signButtonURL = require('../../images/sign.png')
+const preSignButtonURL = require('../../images/preSign.png')
 
 class WaiqinPage extends React.Component {
   constructor(props) {
@@ -42,13 +44,15 @@ class WaiqinPage extends React.Component {
       isInitialSucceed: currentIsInitialSucceed,
       location: currentLocation,
       userCode: currentUserCode,
-      userDetail: currentUserDetail
+      userDetail: currentUserDetail,
+      isSignSucceed: currentIsSignSucceed
     } = this.props
     const {
       isInitialSucceed: nextIsInitialSucceed,
       location: nextLocation,
       userCode: nextUserCode,
-      userDetail: nextUserDetail
+      userDetail: nextUserDetail,
+      isSignSucceed: nextIsSignSucceed
     } = nextProps
 
     const {
@@ -70,30 +74,34 @@ class WaiqinPage extends React.Component {
       localStorage.setItem('userId', nextUserDetail.userId)
       localStorage.setItem('userIdUpdateTime', Date.now())
     }
+    if (nextIsSignSucceed && !currentIsSignSucceed === true) {
+      hashHistory.push('/waiqin/signSucceed')
+    }
   }
 
   onSignClick = () => {
-    hashHistory.push('/waiqin/signSucceed')
+    const {address, location,userDetail, handleSign } = this.props
+    handleSign(location, address, userDetail.userId)
   }
 
   render() {
     const { title, isInitialSucceed, isWxConfigLoading, address } = this.props
-    const { handleSign } = this.props
     const isAllLoaded = isInitialSucceed && ( isWxConfigLoading === false )
     const Address = address ? (
       <span>{address}</span>
     ) : (
       <span>位置获取中...</span>
     )
+    const signButton = address ? (
+      <img className="sign-button" src={signButtonURL} onClick={this.onSignClick}/>
+    ) : (
+      <img className="sign-button" src={preSignButtonURL}/>
+    )
     if (!isAllLoaded)
       return <Loading />
     return (
       <div className="container">
-        <div className="header">
-          <div className={cs('text-center', 'headerLeftContainter')}>返回</div>
-          <h2 className={cs('text-center', 'headerMiddleContainer')}>{title}</h2>
-          <div className={cs('text-center', 'headerRightContainer')}>菜单</div>
-        </div>
+        <MenuHeaderContainer title = {title}/>
         <div className={cs('time-container', 'flex-center-container')}>
           <div>
             <span className="time-text">14:30</span>
@@ -103,7 +111,7 @@ class WaiqinPage extends React.Component {
           </div>
         </div>
         <div className={cs('sign-container', 'flex-center-container')}>
-          <img className="sign-button" src={signButtonURL} onClick={this.onSignClick}/>
+          {signButton}
           <div className="sign-footer">
             <span>添加备注...</span>
           </div>
@@ -129,7 +137,8 @@ const stateToProps = state => ({
   isInitialSucceed: state.wx.isInitialSucceed,
   isWxConfigLoading: state.wx.isWxConfigLoading,
   location: state.waiqin.location,
-  address: state.waiqin.address
+  address: state.waiqin.address,
+  isSignSucceed: state.waiqin.isSignSucceed
 })
 
 const dispatchToProps = dispatch => ({
@@ -142,8 +151,8 @@ const dispatchToProps = dispatch => ({
   initialWxConfig: config => {
     dispatch(actions.wxFetchInitial(config))
   },
-  handleSign: () => {
-    const currentTime = Date.now()
+  handleSign: (location, address, userId) => {
+    dispatch(actions.pushSignRecord(location, address, userId))
   },
   fetchUserCode: () => {
     dispatch(actions.fetchUserCode())

@@ -1,5 +1,5 @@
 import actionTypes from '../actionTypes'
-import { getAddress } from '../middleWares/api'
+import { getAddress, saveSignRecord } from '../middleWares/api'
 import { getLocation } from '../middleWares/wxSDK'
 
 export const requestLocation = () => ({
@@ -38,4 +38,23 @@ export const receiveAddress = location => ({
 export const updateCurrentTime = currentTime => ({
   type: actionTypes.UPDATE_CURRENTTIME,
   currentTime
+})
+
+export const postSignRecord = (location, address, userId) => ({
+  type: actionTypes.POST_SIGN_RECORD,
+  location,
+  address,
+  userId
+})
+
+export const pushSignRecord = (location, address, userId) => dispatch => {
+  dispatch(postSignRecord(location, address, userId))
+  saveSignRecord(location, address, userId, result => {
+    dispatch(postSignRecordSucceed(result))
+  })
+}
+
+export const postSignRecordSucceed = result => ({
+  type: actionTypes.POST_SIGN_RECORD_SUCCEED,
+  result
 })

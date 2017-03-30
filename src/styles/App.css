@@ -5,6 +5,10 @@ body {
   margin: 0;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 #app {
 
 }
@@ -55,7 +59,7 @@ body {
 }
 
 .headerLeftContainter, .headerMiddleContainer, .headerRightContainer {
-  margin: 15px 0;
+  margin: 7px 0;
 }
 
 .time-container {
@@ -103,4 +107,61 @@ body {
 .date-text {
   font-size: 1rem;
   color: #797979;
+}
+
+.sign-succeed-container {
+  width: 80vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sign-succeed-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.sign-succeed-info {
+  padding: 10vh 0 0 0;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column
+}
+
+.sign-succeed-button-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+#signSucceedImg {
+  width: 33vw;
+  margin-bottom: 0.5rem;
+}
+
+.sign-succeed-tips {
+  color: red;
+  font-size: 1rem;
+}
+
+.sign-succeed-info-texts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.sign-succeed-info-texts:first-child {
+  margin-bottom: 0.5rem;
+}
+
+.share-button {
+  padding: 10px 50px;
+  color: #fff;
+  background-color: #cc0000;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
 }
