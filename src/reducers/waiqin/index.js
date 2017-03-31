@@ -3,8 +3,8 @@ import actionTypes from '../../actionTypes'
 const inititalState = {
   location: null,
   address: null,
-  currentTime: null,
-  isSignSucceed: null
+  signTime: null,
+  isSigning: null
 }
 
 const receiveLocation = (state, action) => {
@@ -32,14 +32,16 @@ const updateCurrentTime = (state, action) => {
 const postSignRecord = state => {
   return {
     ...state,
-    isSignSucceed: false
+    isSigning: true
   }
 }
 
-const postSignRecordSucceed = state => {
+const postSignRecordSucceed = (state, action) => {
+  const result = action.result
   return {
     ...state,
-    isSignSucceed: true
+    isSigning: false,
+    signTime: result.signTime
   }
 }
 
@@ -54,7 +56,7 @@ const waiqinReducers = (state = inititalState, action) => {
     case actionTypes.POST_SIGN_RECORD:
       return postSignRecord(state)
     case actionTypes.POST_SIGN_RECORD_SUCCEED:
-      return postSignRecordSucceed(state)
+      return postSignRecordSucceed(state, action)
     default:
       return state
   }

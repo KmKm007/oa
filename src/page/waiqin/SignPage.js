@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { hashHistory } from 'react-router'
+import { hashHistory as history } from 'react-router'
 import { connect } from 'react-redux'
 import cs from 'classnames'
 import actions from '../../actions'
@@ -45,14 +45,14 @@ class WaiqinPage extends React.Component {
       location: currentLocation,
       userCode: currentUserCode,
       userDetail: currentUserDetail,
-      isSignSucceed: currentIsSignSucceed
+      isSigning: currentIsSigning
     } = this.props
     const {
       isInitialSucceed: nextIsInitialSucceed,
       location: nextLocation,
       userCode: nextUserCode,
       userDetail: nextUserDetail,
-      isSignSucceed: nextIsSignSucceed
+      isSigning: nextIsSigning
     } = nextProps
 
     const {
@@ -70,12 +70,12 @@ class WaiqinPage extends React.Component {
     if (currentLocation !== nextLocation) {
       fetchAddress(nextLocation)
     }
-    if (nextUserDetail && !nextUserCode && currentUserDetail !== nextUserDetail) {
+    if (currentUserDetail !== nextUserDetail && !currentUserDetail) {
       localStorage.setItem('userId', nextUserDetail.userId)
       localStorage.setItem('userIdUpdateTime', Date.now())
     }
-    if (nextIsSignSucceed && !currentIsSignSucceed === true) {
-      hashHistory.push('/waiqin/signSucceed')
+    if (nextIsSigning === false && currentIsSigning === true) {
+      history.push('/waiqin/signSucceed')
     }
   }
 
@@ -138,7 +138,7 @@ const stateToProps = state => ({
   isWxConfigLoading: state.wx.isWxConfigLoading,
   location: state.waiqin.location,
   address: state.waiqin.address,
-  isSignSucceed: state.waiqin.isSignSucceed
+  isSigning: state.waiqin.isSigning
 })
 
 const dispatchToProps = dispatch => ({

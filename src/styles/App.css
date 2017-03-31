@@ -124,13 +124,6 @@ body {
   border-bottom: 1px solid #ccc;
 }
 
-.sign-succeed-info {
-  padding: 10vh 0 0 0;
-  flex-grow: 2;
-  display: flex;
-  flex-direction: column
-}
-
 .sign-succeed-button-container {
   flex-grow: 1;
   text-align: center;
@@ -146,11 +139,29 @@ body {
   font-size: 1rem;
 }
 
+.sign-succeed-info {
+  padding: 10vh 0 0 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction:row;
+}
+
+.sign-succeed-info-icons {
+  flex: 1;
+}
+
+.sign-succeed-info-sign {
+  flex: 2;
+}
+
+.sign-succeed-info-sign-time {
+}
+
 .sign-succeed-info-texts {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   font-size: 1rem;
+  color: #666666;
 }
 
 .sign-succeed-info-texts:first-child {

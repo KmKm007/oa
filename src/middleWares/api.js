@@ -84,7 +84,6 @@ export const saveSignRecord = (location, address, userId, callback) => {
   })
   .then(resp => resp.json())
   .then(json => {
-    console.log(json)
     callback(json)
   })
 }
