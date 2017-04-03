@@ -1,21 +1,5 @@
 import React from 'react'
-
-const getTimeObject = time => {
-  const date = new Date(time)
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-  const millisecond = date.getMilliseconds()
-  const hourString = hour > 9? hour : ('0' + hour)
-  const minuteString = minute > 9? minute : ('0' + minute)
-  const secondString = second > 9? second : ('0' + second)
-  return {
-    hour: hourString,
-    minute: minuteString,
-    second: secondString,
-    millisecond
-  }
-}
+import { parseToTimeObject } from '../utils/DateUtil'
 
 class Timer extends React.Component {
   constructor(props) {
@@ -33,7 +17,7 @@ class Timer extends React.Component {
   updateView() {
     setTimeout(() => {
       const currentTime = Date.now()
-      const millisecond = getTimeObject(currentTime).millisecond
+      const millisecond = parseToTimeObject(currentTime).millisecond
       const isShadow = millisecond > 500 ? true : false
       this.setState({
         currentTime,
@@ -46,7 +30,7 @@ class Timer extends React.Component {
   render () {
     const rootStyle = this.props.rootStyle
     const { currentTime, isShadow } = this.state
-    const timeObject = getTimeObject(currentTime)
+    const timeObject = parseToTimeObject(currentTime)
     const color = isShadow ? style.shadowColor : style.defaultColor
     return (
       <div style={rootStyle?rootStyle:{}}>
