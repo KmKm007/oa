@@ -28,12 +28,12 @@ class Timer extends React.Component {
   }
 
   render () {
-    const rootStyle = this.props.rootStyle
+    const { rootStyle, rootClass } = this.props
     const { currentTime, isShadow } = this.state
     const timeObject = parseToTimeObject(currentTime)
     const color = isShadow ? style.shadowColor : style.defaultColor
     return (
-      <div style={rootStyle?rootStyle:{}}>
+      <div style={rootStyle?rootStyle:{}} className={rootClass}>
         <span>{timeObject.hour}</span>
         <span style={{color}}>:</span>
         <span>{timeObject.minute}</span>

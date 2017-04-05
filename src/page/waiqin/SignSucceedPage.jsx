@@ -25,7 +25,7 @@ class SignSucceedPage extends React.Component {
   }
 
   render () {
-    const { title, address, signTime} = this.props
+    const {address, signTime} = this.props
     const signSucceedImg = require('../../images/signSucceed.png')
     const timeObject = parseToTimeObject(signTime)
     const time = (
@@ -37,7 +37,7 @@ class SignSucceedPage extends React.Component {
     )
     return (
       <div className="container">
-        <MenuHeaderContainer title={title}/>
+        <MenuHeaderContainer/>
         <div className="sign-succeed-container">
           <div className={cs('sign-succeed-body', 'flex-center-container')}>
             <img id="signSucceedImg" src={signSucceedImg}/>

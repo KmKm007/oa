@@ -5,7 +5,7 @@ export function parseToTimeObject(time) {
   const day = date.getDate()
   const hour = date.getHours()
   const minute = date.getMinutes()
-  const second = date.getSecnds()
+  const second = date.getSeconds()
   const millisecond = date.getMilliseconds()
   return {
     year,
@@ -16,4 +16,10 @@ export function parseToTimeObject(time) {
     second: second >= 10 ? second : ('0' + second),
     millisecond
   }
+}
+
+export function getCurrentTimeObject() {
+  const time = Date.now()
+  const timeObject = parseToTimeObject(time)
+  return timeObject
 }

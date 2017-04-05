@@ -1,36 +1,60 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
+import { hashHistory as history } from 'react-router'
+import cs from 'classnames'
+import actions from '../../actions'
 
 class RemarkPage extends React.Component {
   componentWillMount() {
-    document.title = {this.props.title}
+    document.title = this.props.title
   }
 
   static defaultProps = {
     title: '添加备注'
   }
 
-  static propTypes = {
-    remarkText: PropTypes.string.isRequired,
-    remarkURL: PropTypes.string.isRequire
+  onConfirmClick = () => {
+    const remarkText = this.refs.remarkText.value
+    const remarkURL = ''
+    this.props.handleSaveRemark(remarkText, remarkURL)
+    history.push('/waiqin/sign')
   }
 
   render () {
+    const {remarkText} = this.props
     return (
       <div className="container">
-        <header>添加签到文字描述</header>
-        <div>
-          <textarea placeholder="点击输入哦~"/>
-        </div>
-        <div>
-          <button>确定</button>
-        </div>
+          <MenuHeaderContainer/>
+          <div className="remark-page-container">
+            <div className="remark-photo-container">
+              <img className="remark-photo-btn" src={require('../../images/addImage.png')}/>
+            </div>
+            <div className="remark-text-container">
+              <header className="remark-text-container-header">添加签到文字描述</header>
+              <textarea
+                className={cs('textarea-no-resize', 'remark-text-area')}
+                placeholder="点击输入哦~"
+                ref="remarkText"
+                defaultValue={remarkText ? remarkText : ''}
+              />
+            </div>
+            <div className="remark-btn-container">
+              <button className="remark-confirm-btn" onClick={this.onConfirmClick}>确&nbsp;&nbsp;定</button>
+            </div>
+          </div>
       </div>
     )
   }
 }
 
-const styles = {
+const stateToProps = state => ({
+  remarkText: state.waiqin.remarkText,
+  remarkURL: state.waiqin.remarkURL
+})
 
-}
+const dispatchToProps = dispatch => ({
+  handleSaveRemark: (remarkText, remarkURL) => dispatch(actions.saveWaiqinRemark(remarkText, remarkURL))
+})
 
-export default RemarkPage
+export default connect(stateToProps, dispatchToProps)(RemarkPage)

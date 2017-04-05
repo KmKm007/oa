@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react'
-import { hashHistory as history } from 'react-router'
+import { hashHistory as history, Link } from 'react-router'
 import { connect } from 'react-redux'
 import cs from 'classnames'
 import actions from '../../actions'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import Loading from '../../components/Loading'
+import Timer from '../../components/Timer'
 import 'vconsole'
+import { getCurrentTimeObject } from '../../utils/DateUtil'
 
 const signButtonURL = require('../../images/sign.png')
 const preSignButtonURL = require('../../images/preSign.png')
@@ -64,7 +66,7 @@ class WaiqinPage extends React.Component {
     if (currentUserCode !== nextUserCode) {
       fetchUserDetailByCode(nextUserCode)
     }
-    if (currentIsInitialSucceed !== nextIsInitialSucceed) {
+    if (currentIsInitialSucceed !== nextIsInitialSucceed && !currentLocation) {
       fetchLocation()
     }
     if (currentLocation !== nextLocation) {
@@ -80,45 +82,55 @@ class WaiqinPage extends React.Component {
   }
 
   onSignClick = () => {
-    const {address, location,userDetail, handleSign } = this.props
-    handleSign(location, address, userDetail.userId)
+    const {address, location, userDetail, remarkText, remarkURL, handleSign } = this.props
+    handleSign(location, address, userDetail.userId, remarkText, remarkURL)
   }
 
   render() {
-    const { title, isInitialSucceed, isWxConfigLoading, address } = this.props
+    const { isInitialSucceed, isWxConfigLoading, address } = this.props
     const isAllLoaded = isInitialSucceed && ( isWxConfigLoading === false )
-    const Address = address ? (
-      <span>{address}</span>
+    const Address = !address ? (
+      <div className={cs('address-container', 'flex-center-container')}>
+        <div style={{flex: 1}}>
+          <span>胜和广场</span>
+        </div>
+        <div style={{flex: 1}}>
+          <button className="btn-showmap">查看地图</button>
+        </div>
+      </div>
     ) : (
-      <span>位置获取中...</span>
+      <div className={cs('address-container', 'flex-center-container')}>
+        <span>位置获取中...</span>
+      </div>
     )
     const signButton = address ? (
       <img className="sign-button" src={signButtonURL} onClick={this.onSignClick}/>
     ) : (
       <img className="sign-button" src={preSignButtonURL}/>
     )
+    const currentTimeObject = getCurrentTimeObject()
     if (!isAllLoaded)
       return <Loading />
     return (
       <div className="container">
-        <MenuHeaderContainer title = {title}/>
+        <MenuHeaderContainer/>
         <div className={cs('time-container', 'flex-center-container')}>
           <div>
-            <span className="time-text">14:30</span>
+            <Timer rootClass="time-text"/>
           </div>
           <div>
-            <span className="date-text">2017年3月23日</span>
+            <span className="date-text">
+              {currentTimeObject.year}年{currentTimeObject.month}月{currentTimeObject.day}日
+            </span>
           </div>
         </div>
         <div className={cs('sign-container', 'flex-center-container')}>
           {signButton}
           <div className="sign-footer">
-            <span>添加备注...</span>
+            <Link to="/waiqin/remark">添加备注...</Link>
           </div>
         </div>
-        <div className={cs('address-container', 'flex-center-container')}>
-          {Address}
-        </div>
+        {Address}
       </div>
     )
   }
@@ -138,7 +150,9 @@ const stateToProps = state => ({
   isWxConfigLoading: state.wx.isWxConfigLoading,
   location: state.waiqin.location,
   address: state.waiqin.address,
-  isSigning: state.waiqin.isSigning
+  isSigning: state.waiqin.isSigning,
+  remarkText:state.waiqin.remarkText,
+  remarkURL: state.waiqin.remarkURL
 })
 
 const dispatchToProps = dispatch => ({
@@ -151,8 +165,15 @@ const dispatchToProps = dispatch => ({
   initialWxConfig: config => {
     dispatch(actions.wxFetchInitial(config))
   },
-  handleSign: (location, address, userId) => {
-    dispatch(actions.pushSignRecord(location, address, userId))
+  handleSign: (location, address, userId, remarkText, remarkURL) => {
+    const params = {
+      location,
+      address,
+      userId,
+      remarkText,
+      remarkURL
+    }
+    dispatch(actions.pushSignRecord(params))
   },
   fetchUserCode: () => {
     dispatch(actions.fetchUserCode())

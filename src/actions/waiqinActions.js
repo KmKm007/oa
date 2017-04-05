@@ -40,16 +40,14 @@ export const updateCurrentTime = currentTime => ({
   currentTime
 })
 
-export const postSignRecord = (location, address, userId) => ({
+export const postSignRecord = params => ({
   type: actionTypes.POST_SIGN_RECORD,
-  location,
-  address,
-  userId
+  params
 })
 
-export const pushSignRecord = (location, address, userId) => dispatch => {
-  dispatch(postSignRecord(location, address, userId))
-  saveSignRecord(location, address, userId, result => {
+export const pushSignRecord = params => dispatch => {
+  dispatch(postSignRecord(params))
+  saveSignRecord(params, result => {
     dispatch(postSignRecordSucceed(result))
   })
 }
@@ -57,4 +55,10 @@ export const pushSignRecord = (location, address, userId) => dispatch => {
 export const postSignRecordSucceed = result => ({
   type: actionTypes.POST_SIGN_RECORD_SUCCEED,
   result
+})
+
+export const saveWaiqinRemark = (remarkText, remarkURL) => ({
+  type: actionTypes.SAVE_WAIQIN_REMARK,
+  remarkText,
+  remarkURL
 })

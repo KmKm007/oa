@@ -4,7 +4,9 @@ const inititalState = {
   location: null,
   address: null,
   signTime: null,
-  isSigning: null
+  isSigning: null,
+  remarkText: null,
+  remarkURL: null
 }
 
 const receiveLocation = (state, action) => {
@@ -45,6 +47,15 @@ const postSignRecordSucceed = (state, action) => {
   }
 }
 
+const saveWaiqinRemark = (state, action) => {
+  const { remarkText, remarkURL } = action
+  return {
+    ...state,
+    remarkText,
+    remarkURL
+  }
+}
+
 const waiqinReducers = (state = inititalState, action) => {
   switch(action.type) {
     case actionTypes.RECEIVE_LOCATION:
@@ -57,6 +68,8 @@ const waiqinReducers = (state = inititalState, action) => {
       return postSignRecord(state)
     case actionTypes.POST_SIGN_RECORD_SUCCEED:
       return postSignRecordSucceed(state, action)
+    case actionTypes.SAVE_WAIQIN_REMARK:
+      return saveWaiqinRemark(state, action)
     default:
       return state
   }

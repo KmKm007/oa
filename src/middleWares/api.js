@@ -71,10 +71,16 @@ export const getUserDetailById = (userId, callback) => {
   })
 }
 
-export const saveSignRecord = (location, address, userId, callback) => {
+export const saveSignRecord = (params, callback) => {
+  const {
+    location,
+    address,
+    userId,
+    remarkText,
+    remarkURL
+  } = params
   const url = 'http://10.17.1.157:8888/OA//api/waiqin/sign'
-  const body = 'longitude=' + location.longitude + '&latitude=' + location.latitude
-                + '&address=' + address + '&userId=' + userId
+  const body = `longitude=${location.longitude}&latitude=${location.latitude}&address=${address}&userId=${userId}&remarkText=${remarkText}&remarkURL=${remarkURL}`
   fetch(url, {
     method: 'POST',
     headers: {
