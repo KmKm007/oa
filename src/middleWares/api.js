@@ -93,3 +93,19 @@ export const saveSignRecord = (params, callback) => {
     callback(json)
   })
 }
+
+export function getChildList(userId, callback) {
+  const url = 'http://10.17.1.157:8888/Authentication/employee/getChildList'
+  const body = `code=${userId}`
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body
+  })
+  .then(resp => resp.json())
+  .then(json => {
+    callback(json.dataList)
+  })
+}
