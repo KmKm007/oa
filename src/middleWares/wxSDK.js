@@ -3,7 +3,7 @@ import { getQueryString } from '../utils/urlUtil'
 
 export const inital = (config, callback) => {
   wx.config({
-    debug: true,
+    debug: false,
     appId: config.corpid,
     timestamp: config.timestamp,
     nonceStr: config.nonceStr,
