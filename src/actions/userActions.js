@@ -1,5 +1,5 @@
 import actionTypes from '../actionTypes/'
-import { getUserDetailByCode, getUserDetailById } from '../middleWares/api'
+import { getUserDetailByCode, getUserDetailById, getChildList } from '../middleWares/api'
 import { getUserCode } from '../middleWares/wxSDK'
 
 export const requestUserCode = () => ({
@@ -50,4 +50,21 @@ export const fetchUserDetailById = userId => dispatch => {
 export const receiveUserDetailById = userDetail => ({
   type: actionTypes.RECEIVE_USER_DETAIL_BY_ID,
   userDetail
+})
+
+export const requestUserChildren = userId => ({
+  type: actionTypes.REQUEST_USER_CHILDREN,
+  userId
+})
+
+export const fetchUserChildren = userId => dispatch => {
+  dispatch(requestUserChildren(userId))
+  getChildList(userId, children => {
+    dispatch(receiveUserChildren(children))
+  })
+}
+
+export const receiveUserChildren = children => ({
+  type: actionTypes.RECEIVE_USER_CHILDREN,
+  children
 })
