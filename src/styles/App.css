@@ -1,17 +1,29 @@
 /* Base Application Styles */
+
 body {
   color: #333333;
   background: rgb(242, 242, 242);
   margin: 0;
 }
 
-*{
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+* {
   box-sizing: border-box;
 }
 
-#app {
-
-}
+#app {}
 
 .index img {
   margin: 40px auto;
@@ -59,7 +71,7 @@ body {
 }
 
 .headerLeftContainter, .headerMiddleContainer, .headerRightContainer {
-  margin: 7px 0;
+  margin: 2vh 0;
 }
 
 .time-container {
@@ -68,7 +80,7 @@ body {
 }
 
 .sign-container {
-  flex:2;
+  flex: 2;
   flex-direction: column;
 }
 
@@ -144,7 +156,7 @@ body {
   padding: 10vh 0 0 0;
   flex-grow: 1;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
 }
 
 .sign-succeed-info-icons {
@@ -155,8 +167,7 @@ body {
   flex: 2;
 }
 
-.sign-succeed-info-sign-time {
-}
+.sign-succeed-info-sign-time {}
 
 .sign-succeed-info-texts {
   display: flex;
@@ -179,7 +190,7 @@ body {
 }
 
 .remark-page-container {
-  width: 70vw;;
+  width: 70vw;
   margin: 0 auto;
   display: flex;
   flex: 2;
@@ -242,4 +253,68 @@ body {
   font-size: 16px;
   border-radius: 20px;
   padding: 10px 50px;
+}
+
+.myself-container {
+  height: 15vh;
+  display: flex;
+  align-content: stretch;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.child-container {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.myself-label, .child-label {
+  font-size: 1.2rem;
+}
+
+.myself-position, .child-position {
+  color: #868686;
+  font-size: 1.0rem;
+}
+
+.show-history-btn {
+  background-color: #ffffff;
+  color: #56ACF2;
+  border: 1px solid #56ACF2;
+  padding: 0.2rem 0.8rem;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+}
+
+.myself-body-container {
+  padding: 2vh 0;
+}
+
+.myself-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-left: 1.5vw solid rgb(71, 103, 150);
+  padding: 2vh 4.5vw 2vh 3.5vw;
+}
+
+.child-list-container {
+  background-color: #ffffff;
+  padding: 2vh 4.5vw;
+}
+
+.child-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 2vh 0 1vh 0;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.child-body:first-child {
+  padding-top: 0;
 }
