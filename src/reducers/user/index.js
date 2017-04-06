@@ -4,7 +4,8 @@ const initialState = {
   userCode: null,
   detail: null,
   isUserCodeLoading: null,
-  isUserDetailLoading: null
+  isUserDetailLoading: null,
+  children: null
 }
 
 const receiveUserCode = (state, action) => {
@@ -45,6 +46,13 @@ const receiveUserDetailById = (state, action) => {
   }
 }
 
+const receiveUserChildren = (state, action) => {
+  return {
+    ...state,
+    children: action.children
+  }
+}
+
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.RECEIVE_USER_CODE:
@@ -57,6 +65,8 @@ const userReducer = (state = initialState, action) => {
       return requestUserDetailById(state, action)
     case actionTypes.RECEIVE_USER_DETAIL_BY_ID:
       return receiveUserDetailById(state, action)
+    case actionTypes.RECEIVE_USER_CHILDREN:
+      return receiveUserChildren(state, action)
     default:
       return state
   }
