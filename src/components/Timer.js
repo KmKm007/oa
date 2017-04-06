@@ -11,11 +11,14 @@ class Timer extends React.Component {
   }
 
   componentDidMount() {
-    this.updateView()
+    this.circle = setInterval(this.updateView,500)
   }
 
-  updateView() {
-    setTimeout(() => {
+  componentWillUnmount() {
+    clearInterval(this.circle)
+  }
+
+  updateView = () => {
       const currentTime = Date.now()
       const millisecond = parseToTimeObject(currentTime).millisecond
       const isShadow = millisecond > 500 ? true : false
@@ -23,8 +26,6 @@ class Timer extends React.Component {
         currentTime,
         isShadow
       })
-      this.updateView()
-    }, 500)
   }
 
   render () {
