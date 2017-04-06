@@ -13,9 +13,13 @@ class Loading extends React.Component {
     return {muiTheme: getMuiTheme(baseTheme)}
   }
   render () {
+    const loadingText = this.props.loadingText
     return (
      <div style={style}>
        <CircularProgress size={60} thickness={7} />
+       <div>
+         <span>{loadingText || 'loading...'}</span>
+       </div>
      </div>
     )
   }
