@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
-import { hashHistory as history } from 'react-router'
+import createHistory from 'history/createHashHistory'
 import cs from 'classnames'
 import actions from '../../actions'
+
+const history = createHistory()
 
 class RemarkPage extends React.Component {
   componentWillMount() {

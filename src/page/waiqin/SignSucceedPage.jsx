@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react'
 import cs from 'classnames'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
-import { hashHistory as history} from 'react-router'
+import createHistory from 'history/createHashHistory'
 import { connect } from 'react-redux'
 import { parseToTimeObject } from '../../utils/DateUtil'
+
+const history = createHistory()
 
 class SignSucceedPage extends React.Component {
   static defaultProps = {

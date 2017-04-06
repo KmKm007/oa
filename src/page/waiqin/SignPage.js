@@ -89,10 +89,10 @@ class WaiqinPage extends React.Component {
   render() {
     const { isInitialSucceed, isWxConfigLoading, address } = this.props
     const isAllLoaded = isInitialSucceed && ( isWxConfigLoading === false )
-    const Address = !address ? (
+    const Address = address ? (
       <div className={cs('address-container', 'flex-center-container')}>
         <div style={{flex: 1}}>
-          <span>胜和广场</span>
+          <span>{address}</span>
         </div>
         <div style={{flex: 1}}>
           <button className="btn-showmap">查看地图</button>
