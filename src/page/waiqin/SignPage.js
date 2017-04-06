@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import { hashHistory as history, Link } from 'react-router'
+import { Link } from 'react-router-dom'
+import createHistory from 'history/createHashHistory'
 import { connect } from 'react-redux'
 import cs from 'classnames'
 import actions from '../../actions'
@@ -8,9 +9,12 @@ import Loading from '../../components/Loading'
 import Timer from '../../components/Timer'
 import 'vconsole'
 import { getCurrentTimeObject } from '../../utils/DateUtil'
+import { showLocation } from '../../middleWares/wxSDK'
 
 const signButtonURL = require('../../images/sign.png')
 const preSignButtonURL = require('../../images/preSign.png')
+
+const history = createHistory()
 
 class WaiqinPage extends React.Component {
   constructor(props) {
@@ -86,6 +90,18 @@ class WaiqinPage extends React.Component {
     handleSign(location, address, userDetail.userId, remarkText, remarkURL)
   }
 
+  onShowLocationClick = () => {
+    const { location, address } = this.props
+    const locationConfig = {
+      latitude: location.latitude,
+      longitude: location.longitude,
+      name: '当前位置',
+      address,
+      scale: 20
+    }
+    showLocation(locationConfig)
+  }
+
   render() {
     const { isInitialSucceed, isWxConfigLoading, address } = this.props
     const isAllLoaded = isInitialSucceed && ( isWxConfigLoading === false )
@@ -95,7 +111,7 @@ class WaiqinPage extends React.Component {
           <span>{address}</span>
         </div>
         <div style={{flex: 1}}>
-          <button className="btn-showmap">查看地图</button>
+          <button className="btn-showmap" onClick={this.onShowLocationClick}>查看地图</button>
         </div>
       </div>
     ) : (
@@ -113,7 +129,12 @@ class WaiqinPage extends React.Component {
       return <Loading />
     return (
       <div className="container">
-        <MenuHeaderContainer/>
+        <MenuHeaderContainer
+          rightLabel="查询"
+          handleRightClick={() => {
+            history.push('/waiqin/childUsers')
+          }}
+        />
         <div className={cs('time-container', 'flex-center-container')}>
           <div>
             <Timer rootClass="time-text"/>
