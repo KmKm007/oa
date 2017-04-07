@@ -59,12 +59,18 @@ export const requestUserChildren = userId => ({
 
 export const fetchUserChildren = userId => dispatch => {
   dispatch(requestUserChildren(userId))
-  getChildList(userId, children => {
-    dispatch(receiveUserChildren(children))
-  })
+  getChildList(userId,
+    children => dispatch(receiveUserChildren(children)),
+    errorMesg => dispatch(receiveUserChildrenFailed(errorMesg)))
 }
 
 export const receiveUserChildren = children => ({
   type: actionTypes.RECEIVE_USER_CHILDREN,
   children
+})
+
+export const receiveUserChildrenFailed = errorMesg => ({
+  type: actionTypes.RECEIVE_USER_CHILDREN_FAILED,
+  errorType: actionTypes.RECEIVE_USER_CHILDREN_FAILED,
+  errorMesg
 })
