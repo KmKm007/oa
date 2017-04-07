@@ -5,7 +5,8 @@ const initialState = {
   detail: null,
   isUserCodeLoading: null,
   isUserDetailLoading: null,
-  children: null
+  children: null,
+  errorMesgArray: []
 }
 
 const receiveUserCode = (state, action) => {
@@ -46,10 +47,31 @@ const receiveUserDetailById = (state, action) => {
   }
 }
 
+const updateErrorArrayIfSucceed = (initErrorMesgArray,errorType) => {
+  const errorMesgArray = initErrorMesgArray.filter(mesg => mesg.errorType !== errorType)
+  return errorMesgArray
+}
+
 const receiveUserChildren = (state, action) => {
+  const errorMesgArray = updateErrorArrayIfSucceed(state.errorMesgArray,
+                          actionTypes.RECEVE_USER_CHILDREN_FAILED)
   return {
     ...state,
+    errorMesgArray,
     children: action.children
+  }
+}
+
+const receiveUserDataFailed = (state, action) => {
+  const { errorMesg, errorType }  = action
+  const errorMesgArray = state.errorMesgArray.filter(mesg => mesg.errorType !== errorType)
+  errorMesgArray.push({
+    errorType,
+    errorMesg
+  })
+  return {
+    ...state,
+    errorMesgArray
   }
 }
 
@@ -67,6 +89,8 @@ const userReducer = (state = initialState, action) => {
       return receiveUserDetailById(state, action)
     case actionTypes.RECEIVE_USER_CHILDREN:
       return receiveUserChildren(state, action)
+    case actionTypes.RECEIVE_USER_CHILDREN_FAILED:
+      return receiveUserDataFailed(state, action)
     default:
       return state
   }
