@@ -4,6 +4,8 @@ import SignPage from '../page/waiqin/SignPage'
 import SignSucceedPage from '../page/waiqin/SignSucceedPage'
 import ListChildUserPage from '../page/waiqin/ListChildUserPage'
 import RemarkPage from '../page/waiqin/RemarkPage'
+import SignHistoryPage from '../page/waiqin/SignHistoryPage'
+
 
 const AppRouter = () => (
   <Router>
@@ -12,6 +14,7 @@ const AppRouter = () => (
         <Route path="/waiqin/signSucceed" component={SignSucceedPage}/>
         <Route path="/waiqin/remark" component={RemarkPage} />
         <Route path="/waiqin/childUsers" component={ListChildUserPage}/>
+        <Route path="/waiqin/history" component={SignHistoryPage}/>
         <Redirect from="/" to="/waiqin/sign"/>
       </div>
   </Router>
