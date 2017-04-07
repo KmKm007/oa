@@ -59,7 +59,7 @@ ul {
 }
 
 .headerLeftContainter, .headerRightContainer {
-  flex-grow: 1;
+  flex: 1 1 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -317,4 +317,109 @@ ul {
 
 .child-body:first-child {
   padding-top: 0;
+}
+
+.waiqin-history-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.waiqin-history-date-container {
+  display: flex;
+  align-items: center;
+  height: 70px;
+}
+
+.waiqin-history-date-left-container, .waiqin-history-date-right-container {
+  display: flex;
+  flex: 1 1 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.waiqin-history-date-left-body-container, .waiqin-history-date-right-body-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.waiqin-history-date-middle-container {
+  text-align: center;
+  color: #6E6E6E;
+}
+
+.date-title {
+  color: #6E6E6E;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+
+.date-content {
+  color: #333333;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.waiqin-history-body-container {
+  padding: 0 3vw;
+  flex: 1 1 auto;
+  background-color: #ffffff;
+}
+
+.history-item-container {
+  display: flex;
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+}
+
+.history-item-mesg-container {
+  display: flex;
+  flex: 1 auto;
+}
+
+.history-item-icon-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.8rem 0 0;
+}
+
+.history-item-address-icon, .history-item-text-address-container{
+  margin-top: 0.6rem;
+}
+
+.history-item-text-container {
+  display: flex;
+  flex: 1 auto;
+  flex-direction: column;
+}
+
+.history-item-text-time-container {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  color: #cc0000;
+}
+
+.history-item-text-address-container, .history-item-text-time-container {
+  font-size: 1rem;
+}
+
+.history-item-photo-container {
+  width: 50px;
+}
+
+.history-container {
+  padding-top: 2rem;
+}
+
+.history-item-text-time-ms {
+  margin-left: 2rem;
+}
+
+.errorMesg {
+  color: #cc0000;
+  text-align: center;
 }
