@@ -38,7 +38,8 @@ class WaiqinPage extends React.Component {
   componentDidMount() {
     this.props.fetchWxConfig()
     const userId = localStorage.getItem('userId')
-    if (!userId) {
+
+    if (!userId || userId === 'undefined') {
       this.props.fetchUserCode()
     } else {
       this.props.fetchUserDetailById(userId)
