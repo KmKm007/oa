@@ -1,6 +1,6 @@
 import 'whatwg-fetch'
 
-export const getWxConfig = callback => {
+export const getWxConfig = (callback, failCallback) => {
   const url = 'http://10.17.1.157:8888/OA/wx/getWxConfig'
   fetch(url, {
     method: 'GET',
@@ -10,11 +10,15 @@ export const getWxConfig = callback => {
   })
   .then(resp => resp.json())
   .then(json => {
-    callback(json)
+    if (json.status === 0) {
+      callback(json)
+    } else {
+      failCallback(json.message)
+    }
   })
 }
 
-export const postCodeToServer = (code, callback) => {
+export const postCodeToServer = (code, callback, failCallback) => {
   const url = 'http://10.17.1.157:8888/OA/wx/getUserId?code=' + code
   fetch(url, {
     method: 'GET',
@@ -24,11 +28,15 @@ export const postCodeToServer = (code, callback) => {
   })
   .then(resp => resp.json())
   .then(json => {
-    callback(json)
+    if (json.status === 0) {
+      callback(json)
+    } else {
+      failCallback(json.message)
+    }
   })
 }
 
-export const getAddress = (location, callback) => {
+export const getAddress = (location, callback, failCallback) => {
   const { longitude, latitude } = location
   const url = 'http://10.17.1.157:8888/OA/amap/getAddress?' + 'longitude=' + longitude + '&latitude=' + latitude
   fetch(url, {
@@ -39,11 +47,15 @@ export const getAddress = (location, callback) => {
   })
   .then(resp => resp.json())
   .then(json => {
-    callback(json.location)
+    if (json.status === 0) {
+      callback(json.location)
+    } else {
+      failCallback(json.message)
+    }
   })
 }
 
-export const getUserDetailByCode = (code, callback) => {
+export const getUserDetailByCode = (code, callback, failCallback) => {
   const url = 'http://10.17.1.157:8888/OA/wx/getUserDetailByCode?code=' + code
   fetch(url, {
     method: 'GET',
@@ -53,11 +65,15 @@ export const getUserDetailByCode = (code, callback) => {
   })
   .then(resp => resp.json())
   .then(json => {
-    callback(json.user)
+    if (json.status === 0) {
+      callback(json.user)
+    } else {
+      failCallback(json.message)
+    }
   })
 }
 
-export const getUserDetailById = (userId, callback) => {
+export const getUserDetailById = (userId, callback, failCallback) => {
   const url = 'http://10.17.1.157:8888/OA/wx/getUserDetailById?userId=' + userId
   fetch(url, {
     method: 'GET',
@@ -67,7 +83,11 @@ export const getUserDetailById = (userId, callback) => {
   })
   .then(resp => resp.json())
   .then(json => {
-    callback(json.user)
+    if (json.status === 0) {
+      callback(json.user)
+    } else {
+      failCallback(json.message)
+    }
   })
 }
 
@@ -94,7 +114,7 @@ export const saveSignRecord = (params, callback) => {
   })
 }
 
-export function getChildList(userId, callback) {
+export function getChildList(userId, callback, failCallback) {
   const url = 'http://10.17.1.157:8888/Authentication/employee/getChildList'
   const body = `code=${userId}`
   fetch(url, {
@@ -106,6 +126,30 @@ export function getChildList(userId, callback) {
   })
   .then(resp => resp.json())
   .then(json => {
-    callback(json.dataList)
+    if (json.status === 0) {
+      callback(json.dataList)
+    } else {
+      failCallback(json.message)
+    }
+  })
+}
+
+export function getWaiqinHistory(userId, callback, failCallback) {
+  const url = 'http://10.17.1.157:8888/OA/api/waiqin/history'
+  const body = `userId=${userId}`
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body
+  })
+  .then(resp => resp.json())
+  .then(json => {
+    if (json.status === 0) {
+      callback(json.dataList)
+    } else {
+      failCallback(json.message)
+    }
   })
 }
