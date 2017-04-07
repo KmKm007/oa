@@ -1,5 +1,5 @@
 import actionTypes from '../actionTypes'
-import { getAddress, saveSignRecord } from '../middleWares/api'
+import { getAddress, saveSignRecord, getWaiqinHistory } from '../middleWares/api'
 import { getLocation } from '../middleWares/wxSDK'
 
 export const requestLocation = () => ({
@@ -62,3 +62,21 @@ export const saveWaiqinRemark = (remarkText, remarkURL) => ({
   remarkText,
   remarkURL
 })
+
+export const requestWaiqinHistory = userId => ({
+  type: actionTypes.REQUEST_WAIQIN_HISTORY,
+  userId
+})
+
+export const receiveWaiqinHistory = (userId,signRecords) => ({
+  type: actionTypes.RECEIVE_WAIQIN_HISTORY,
+  userId,
+  signRecords
+})
+
+export const fetchWaiqinHistory = userId => dispatch => {
+  dispatch(requestWaiqinHistory(userId))
+  getWaiqinHistory(userId, signRecords => {
+    dispatch(receiveWaiqinHistory(userId, signRecords))
+  })
+}
