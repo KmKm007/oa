@@ -6,7 +6,9 @@ const inititalState = {
   signTime: null,
   isSigning: null,
   remarkText: null,
-  remarkURL: null
+  remarkURL: null,
+  historys: [],
+  historyBy: null
 }
 
 const receiveLocation = (state, action) => {
@@ -56,6 +58,26 @@ const saveWaiqinRemark = (state, action) => {
   }
 }
 
+const requestWaiqinHistory = (state, action) => {
+  return {
+    ...state,
+    historyBy: action.userId
+  }
+}
+
+const receiveWaiqinHistory = (state, action) => {
+  const { userId, signRecords }  = action
+  const historys = state.historys.filter(history => history.userId !== userId)
+  historys.push({
+    userId,
+    signRecords
+  })
+  return {
+    ...state,
+    historys
+  }
+}
+
 const waiqinReducers = (state = inititalState, action) => {
   switch(action.type) {
     case actionTypes.RECEIVE_LOCATION:
@@ -70,6 +92,10 @@ const waiqinReducers = (state = inititalState, action) => {
       return postSignRecordSucceed(state, action)
     case actionTypes.SAVE_WAIQIN_REMARK:
       return saveWaiqinRemark(state, action)
+    case actionTypes.REQUEST_WAIQIN_HISTORY:
+      return requestWaiqinHistory(state, action)
+    case actionTypes.RECEIVE_WAIQIN_HISTORY:
+      return receiveWaiqinHistory(state, action)
     default:
       return state
   }
