@@ -63,20 +63,39 @@ export const saveWaiqinRemark = (remarkText, remarkURL) => ({
   remarkURL
 })
 
-export const requestWaiqinHistory = userId => ({
-  type: actionTypes.REQUEST_WAIQIN_HISTORY,
+export const changeWaiQinHistoryBy = userId => ({
+  type: actionTypes.CHANGE_HISTORY_BY,
   userId
 })
 
-export const receiveWaiqinHistory = (userId,signRecords) => ({
+
+export const requestWaiqinHistory = params => ({
+  type: actionTypes.REQUEST_WAIQIN_HISTORY,
+  params
+})
+
+export const receiveWaiqinHistory = (params, signRecords) => ({
   type: actionTypes.RECEIVE_WAIQIN_HISTORY,
-  userId,
+  params,
   signRecords
 })
 
-export const fetchWaiqinHistory = userId => dispatch => {
-  dispatch(requestWaiqinHistory(userId))
-  getWaiqinHistory(userId, signRecords => {
-    dispatch(receiveWaiqinHistory(userId, signRecords))
+export const fetchWaiqinHistory = (userId, beginTime, endTime) => dispatch => {
+  const params = {
+    userId
+  }
+  if (beginTime) {
+    params.beginTime = beginTime
+    params.endTime = endTime
+  }
+  dispatch(requestWaiqinHistory(params))
+  getWaiqinHistory(params, signRecords => {
+    dispatch(receiveWaiqinHistory(params, signRecords))
   })
 }
+
+export const changeWaiqinHistoryDates = (beginTime, endTime) => ({
+  type: actionTypes.CHANGE_WAIQIN_HISTORY_DATES,
+  beginTime,
+  endTime
+})

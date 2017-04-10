@@ -7,8 +7,13 @@ const inititalState = {
   isSigning: null,
   remarkText: null,
   remarkURL: null,
+  isHistoryLoading: null,
   historys: [],
-  historyBy: null
+  historyBy: null,
+  historyDates: {
+    beginTime: Date.now() - (7 * 3600 * 24 * 1000),
+    endTime: Date.now()
+  }
 }
 
 const receiveLocation = (state, action) => {
@@ -58,15 +63,23 @@ const saveWaiqinRemark = (state, action) => {
   }
 }
 
-const requestWaiqinHistory = (state, action) => {
+const changeWaiQinHistoryBy = (state, action) => {
   return {
     ...state,
     historyBy: action.userId
   }
 }
 
+const requestWaiqinHistory = state => {
+  return {
+    ...state,
+    isHistoryLoading: true
+  }
+}
+
 const receiveWaiqinHistory = (state, action) => {
-  const { userId, signRecords }  = action
+  const { params, signRecords }  = action
+  const userId = params.userId
   const historys = state.historys.filter(history => history.userId !== userId)
   historys.push({
     userId,
@@ -74,7 +87,19 @@ const receiveWaiqinHistory = (state, action) => {
   })
   return {
     ...state,
-    historys
+    historys,
+    isHistoryLoading: false
+  }
+}
+
+const changeWaiqinHistoryDates = (state, action) => {
+  const { beginTime, endTime } = action
+  return {
+    ...state,
+    historyDates: {
+      beginTime,
+      endTime
+    }
   }
 }
 
@@ -92,10 +117,14 @@ const waiqinReducers = (state = inititalState, action) => {
       return postSignRecordSucceed(state, action)
     case actionTypes.SAVE_WAIQIN_REMARK:
       return saveWaiqinRemark(state, action)
+    case actionTypes.CHANGE_HISTORY_BY:
+      return changeWaiQinHistoryBy(state, action)
     case actionTypes.REQUEST_WAIQIN_HISTORY:
-      return requestWaiqinHistory(state, action)
+      return requestWaiqinHistory(state)
     case actionTypes.RECEIVE_WAIQIN_HISTORY:
       return receiveWaiqinHistory(state, action)
+    case actionTypes.CHANGE_WAIQIN_HISTORY_DATES:
+      return changeWaiqinHistoryDates(state, action)
     default:
       return state
   }
