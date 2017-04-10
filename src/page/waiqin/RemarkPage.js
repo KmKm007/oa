@@ -20,7 +20,7 @@ class RemarkPage extends React.Component {
     const remarkText = this.refs.remarkText.value
     const remarkURL = ''
     this.props.handleSaveRemark(remarkText, remarkURL)
-    history.push('/waiqin/sign')
+    history.replace('/waiqin/sign')
   }
 
   render () {

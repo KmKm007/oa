@@ -7,7 +7,7 @@ import actions from '../../actions'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import Loading from '../../components/Loading'
 import Timer from '../../components/Timer'
-import 'vconsole'
+// import 'vconsole'
 import { getCurrentTimeObject } from '../../utils/DateUtil'
 import { showLocation } from '../../middleWares/wxSDK'
 

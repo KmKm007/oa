@@ -4,22 +4,63 @@ import createHistory from 'history/createHashHistory'
 import { connect } from 'react-redux'
 import Loading from '../../components/Loading'
 import { parseToTimeObject } from '../../utils/DateUtil'
+import cs from 'classnames'
+import Calander from '../../containers/Calander'
+import actions from '../../actions'
 
 const history = createHistory()
 
 class SignHistoryHistory extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isShowDatePicker: false
+    }
+  }
+
   static defaultProps = {
     title: '的历史外勤'
   }
 
   componentWillMount() {
-      const {title, historyBy } = this.props
-      document.title = `${historyBy}${title}`
+    const {title, historyBy } = this.props
+    document.title = `${historyBy}${title}`
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { historyDates: nextHistoryDates } = nextProps
+    const { historyDates: currentHistoryDates } = this.props
+    if (currentHistoryDates.beginTime === nextHistoryDates.beginTime
+      && currentHistoryDates.endTime === nextHistoryDates.endTime) {
+        return
+      } else {
+        this.props.handleFetchWaiqinHistory()
+      }
+  }
+
+  handleDateClick = () => {
+    this.setState({
+      isShowDatePicker: true
+    })
+  }
+
+  handleDateSelected = event => {
+    if (event.eventType === 3) {
+      const beginTime = event.start.getTime()
+      const endTime = event.end.getTime()
+      this.props.handleHistoryDatesChange(beginTime, endTime)
+      this.setState({
+        isShowDatePicker: false
+      })
+      const userId = this.props.historyBy
+      this.props.handleFetchWaiqinHistory(userId, beginTime, endTime)
+    }
   }
 
   render () {
-    const { signRecords } = this.props
-    const WaiqinBody = signRecords ? (
+    const { signRecords, historyDates, isHistoryLoading } = this.props
+    const WaiqinBody = (isHistoryLoading && signRecords) ? (
         <ul className="history-container">
           {signRecords.map(h => {
             const timeObject = parseToTimeObject(h.createTime)
@@ -55,6 +96,36 @@ class SignHistoryHistory extends React.Component {
     ) : (
       <Loading loadingText="数据加载中..." />
     )
+    const beginTimeObject = parseToTimeObject(historyDates.beginTime)
+    const endTimeObject = parseToTimeObject(historyDates.endTime)
+    const Content = this.state.isShowDatePicker ? (
+      <Calander
+        onSelect={this.handleDateSelected}
+      />
+    ) : (
+      <div className="waiqin-history-container">
+        <div className="waiqin-history-date-container" onClick={!signRecords ? this.handleDateClick : ''}>
+          <div className="waiqin-history-date-left-container">
+            <div className={cs('waiqin-history-date-left-body-container', 'flatpickr')}>
+              <span className="date-title">开始时间</span>
+              <span className="date-content">{`${beginTimeObject.year}/${beginTimeObject.month}/${beginTimeObject.day}`}</span>
+            </div>
+          </div>
+          <div className="waiqin-history-date-middle-container">
+            <span>—— 至 ——</span>
+          </div>
+          <div className="waiqin-history-date-right-container">
+            <div className={cs('waiqin-history-date-right-body-container', 'flatpickr')}>
+              <span className="date-title" data-toggle>结束时间</span>
+                <span className="date-content">{`${endTimeObject.year}/${endTimeObject.month}/${endTimeObject.day}`}</span>
+            </div>
+          </div>
+        </div>
+        <div className="waiqin-history-body-container">
+          {WaiqinBody}
+        </div>
+      </div>
+    )
     return (
       <div className="container">
         <MenuHeaderContainer
@@ -63,41 +134,26 @@ class SignHistoryHistory extends React.Component {
             history.push('/waiqin/sign')
           }}
         />
-        <div className="waiqin-history-container">
-          <div className="waiqin-history-date-container">
-            <div className="waiqin-history-date-left-container">
-              <div className="waiqin-history-date-left-body-container">
-                <span className="date-title">开始时间</span>
-                <span className="date-content">2017-03-31</span>
-              </div>
-            </div>
-            <div className="waiqin-history-date-middle-container">
-              <span>—— 至 ——</span>
-            </div>
-            <div className="waiqin-history-date-right-container">
-              <div className="waiqin-history-date-right-body-container">
-                <span className="date-title">开始时间</span>
-                <span className="date-content">2017-03-31</span>
-              </div>
-            </div>
-          </div>
-          <div className="waiqin-history-body-container">
-            {WaiqinBody}
-          </div>
-        </div>
+      {Content}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const historys = state.waiqin.historys
-  const historyBy = state.waiqin.historyBy
+  const { historys, historyBy, historyDates, isHistoryLoading } = state.waiqin
   const waiqinHistory = historys.find(h => h.userId === historyBy)
   return {
     historyBy,
-    signRecords: waiqinHistory ? waiqinHistory.signRecords : null
+    signRecords: waiqinHistory ? waiqinHistory.signRecords : null,
+    historyDates,
+    isHistoryLoading
   }
 }
 
-export default connect(mapStateToProps)(SignHistoryHistory)
+const mapDispatchToProps = dispatch => ({
+  handleHistoryDatesChange: (beginTime, endTime) => dispatch(actions.changeWaiqinHistoryDates(beginTime, endTime)),
+  handleFetchWaiqinHistory: (userId, beginTime, endTime) => dispatch(actions.fetchWaiqinHistory(userId, beginTime, endTime))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignHistoryHistory)

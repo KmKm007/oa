@@ -95,7 +95,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => ({
   fetchUserChildren: userId => dispatch(actions.fetchUserChildren(userId)),
-  handleFetchWaiqinHistory: userId => dispatch(actions.fetchWaiqinHistory(userId))
+  handleHistoryByChange: userId => dispatch(actions.changeWaiQinHistoryBy(userId))
 })
 
 export default connect(stateToProps, dispatchToProps)(ListChildUserPage)
