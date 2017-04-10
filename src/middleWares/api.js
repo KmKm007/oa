@@ -134,9 +134,13 @@ export function getChildList(userId, callback, failCallback) {
   })
 }
 
-export function getWaiqinHistory(userId, callback, failCallback) {
+export function getWaiqinHistory(params, callback, failCallback) {
   const url = 'http://10.17.1.157:8888/OA/api/waiqin/history'
-  const body = `userId=${userId}`
+  const { userId, beginTime, endTime } = params
+  let body = `userId=${userId}`
+  if (beginTime && endTime) {
+    body = `${body}&beginTime=${beginTime}&endTime=${endTime}`
+  }
   fetch(url, {
     method: 'POST',
     headers: {
