@@ -28,14 +28,18 @@ class SignHistoryHistory extends React.Component {
     document.title = `${historyBy}${title}`
   }
 
+  componentDidMount() {
+    const { historyDates, userId, handleFetchWaiqinHistory} = this.props
+    handleFetchWaiqinHistory(userId,historyDates.beginTime, historyDates.endTime)
+  }
+
   componentWillReceiveProps(nextProps) {
     const { historyDates: nextHistoryDates } = nextProps
-    const { historyDates: currentHistoryDates } = this.props
-    if (currentHistoryDates.beginTime === nextHistoryDates.beginTime
-      && currentHistoryDates.endTime === nextHistoryDates.endTime) {
-        return
-      } else {
-        this.props.handleFetchWaiqinHistory()
+    const { historyDates: currentHistoryDates, userId } = this.props
+    if (currentHistoryDates.beginTime !== nextHistoryDates.beginTime
+      || currentHistoryDates.endTime !== nextHistoryDates.endTime) {
+        console.info('请求历史考勤')
+        this.props.handleFetchWaiqinHistory(userId, nextProps.beginTime, nextProps.endTime)
       }
   }
 
@@ -60,7 +64,7 @@ class SignHistoryHistory extends React.Component {
 
   render () {
     const { signRecords, historyDates, isHistoryLoading } = this.props
-    const WaiqinBody = (isHistoryLoading && signRecords) ? (
+    const WaiqinBody = (!isHistoryLoading && signRecords) ? (
         <ul className="history-container">
           {signRecords.map(h => {
             const timeObject = parseToTimeObject(h.createTime)
@@ -104,7 +108,7 @@ class SignHistoryHistory extends React.Component {
       />
     ) : (
       <div className="waiqin-history-container">
-        <div className="waiqin-history-date-container" onClick={!signRecords ? this.handleDateClick : ''}>
+        <div className="waiqin-history-date-container" onClick={!isHistoryLoading ? this.handleDateClick : ''}>
           <div className="waiqin-history-date-left-container">
             <div className={cs('waiqin-history-date-left-body-container', 'flatpickr')}>
               <span className="date-title">开始时间</span>

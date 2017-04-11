@@ -7,11 +7,13 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducers from './reducers'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import 'vconsole'
 import './styles/App.css'
 
 injectTapEventPlugin()
 
 const middleWare = [ thunk ]
+
 
 // if (process.env.NODE_ENV !== 'production') {
   middleWare.push(createLogger())

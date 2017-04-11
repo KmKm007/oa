@@ -26,7 +26,7 @@ class ListChildUserPage extends React.Component {
 
   onUserClick = userId => {
     userId = userId || this.props.userDetail.userId
-    this.props.handleFetchWaiqinHistory(userId)
+    this.props.handleHistoryByChange(userId)
     history.push('/waiqin/history')
   }
 

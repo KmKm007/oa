@@ -117,7 +117,7 @@ const waiqinReducers = (state = inititalState, action) => {
       return postSignRecordSucceed(state, action)
     case actionTypes.SAVE_WAIQIN_REMARK:
       return saveWaiqinRemark(state, action)
-    case actionTypes.CHANGE_HISTORY_BY:
+    case actionTypes.CHANGE_WAIQIN_HISTORY_BY:
       return changeWaiQinHistoryBy(state, action)
     case actionTypes.REQUEST_WAIQIN_HISTORY:
       return requestWaiqinHistory(state)
