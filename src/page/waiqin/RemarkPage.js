@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import createHistory from 'history/createHashHistory'
 import cs from 'classnames'
-import actions from '../../actions'
+import actions from '../../Redux/actions'
 
 const history = createHistory()
 

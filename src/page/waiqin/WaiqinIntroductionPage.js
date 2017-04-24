@@ -1,6 +1,5 @@
 import React from 'react'
 import Introduction from '../../containers/Introduction'
-import '../../styles/swiper.min.css'
 
 class WaiqinIntroductionPage extends React.Component {
   componentWillMount() {

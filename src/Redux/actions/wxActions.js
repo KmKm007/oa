@@ -1,6 +1,6 @@
-import actionTypes from '../actionTypes/'
-import { inital } from '../middleWares/wxSDK'
-import { getWxConfig } from '../middleWares/api'
+import actionTypes from '../actionTypes'
+import { inital } from '../../middleWares/wxSDK'
+import { getWxConfig } from '../../middleWares/api'
 
 export const wxInitial = () => ({
   type: actionTypes.WX_INITIAL

@@ -1,6 +1,6 @@
 import actionTypes from '../actionTypes/'
-import { getUserDetailByCode, getUserDetailById, getChildList } from '../middleWares/api'
-import { getUserCode } from '../middleWares/wxSDK'
+import { getUserDetailByCode, getUserDetailById, getChildList } from '../../middleWares/api'
+import { getUserCode } from '../../middleWares/wxSDK'
 
 export const requestUserCode = () => ({
   type: actionTypes.REQUEST_USER_CODE

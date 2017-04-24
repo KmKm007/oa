@@ -6,7 +6,7 @@ import Loading from '../../components/Loading'
 import { parseToTimeObject } from '../../utils/DateUtil'
 import cs from 'classnames'
 import Calander from '../../containers/Calander'
-import actions from '../../actions'
+import actions from '../../Redux/actions'
 
 const history = createHistory()
 
@@ -38,7 +38,6 @@ class SignHistoryHistory extends React.Component {
     const { historyDates: currentHistoryDates, userId } = this.props
     if (currentHistoryDates.beginTime !== nextHistoryDates.beginTime
       || currentHistoryDates.endTime !== nextHistoryDates.endTime) {
-        console.info('请求历史考勤')
         this.props.handleFetchWaiqinHistory(userId, nextProps.beginTime, nextProps.endTime)
       }
   }

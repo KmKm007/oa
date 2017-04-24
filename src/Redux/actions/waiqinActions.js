@@ -1,6 +1,6 @@
 import actionTypes from '../actionTypes'
-import { getAddress, saveSignRecord, getWaiqinHistory } from '../middleWares/api'
-import { getLocation } from '../middleWares/wxSDK'
+import { getAddress, saveSignRecord, getWaiqinHistory } from '../../middleWares/api'
+import { getLocation } from '../../middleWares/wxSDK'
 
 export const requestLocation = () => ({
   type: actionTypes.REQUEST_LOCATION

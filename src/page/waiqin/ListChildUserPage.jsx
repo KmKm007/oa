@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
-import actions from '../../actions'
-import actionTypes from '../../actionTypes'
+import actions from '../../Redux/actions'
+import actionTypes from '../../Redux/actionTypes'
 import createHistory from 'history/createHashHistory'
 import Loading from '../../components/Loading'
 
