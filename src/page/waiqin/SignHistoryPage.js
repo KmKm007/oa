@@ -29,8 +29,8 @@ class SignHistoryHistory extends React.Component {
   }
 
   componentDidMount() {
-    const { historyDates, userId, handleFetchWaiqinHistory} = this.props
-    handleFetchWaiqinHistory(userId,historyDates.beginTime, historyDates.endTime)
+    const { historyDates, historyBy: userId, handleFetchWaiqinHistory} = this.props
+    handleFetchWaiqinHistory(userId, historyDates.beginTime, historyDates.endTime)
   }
 
   componentWillReceiveProps(nextProps) {

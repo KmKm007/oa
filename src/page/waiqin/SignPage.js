@@ -1,17 +1,10 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import PropTypes from 'prop-types'
 import createHistory from 'history/createHashHistory'
 import { connect } from 'react-redux'
-import cs from 'classnames'
 import actions from '../../Redux/actions'
-import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
-import Loading from '../../components/Loading'
-import Timer from '../../components/Timer'
-import { getCurrentTimeObject } from '../../utils/DateUtil'
 import { showLocation } from '../../middleWares/wxSDK'
-
-const signButtonURL = require('../../images/sign.png')
-const preSignButtonURL = require('../../images/preSign.png')
+import SignContainer from '../../containers/waiqin/SignContainer'
 
 const history = createHistory()
 
@@ -37,7 +30,6 @@ class WaiqinPage extends React.Component {
   componentDidMount() {
     this.props.fetchWxConfig()
     const userId = localStorage.getItem('userId')
-
     if (!userId || userId === 'undefined') {
       this.props.fetchUserCode()
     } else {
@@ -102,57 +94,30 @@ class WaiqinPage extends React.Component {
     showLocation(locationConfig)
   }
 
+  onSearchBtnClick = () => {
+    history.push('/waiqin/childUsers')
+  }
+
   render() {
-    const { isInitialSucceed, isWxConfigLoading, address } = this.props
-    const isAllLoaded = isInitialSucceed && ( isWxConfigLoading === false )
-    const Address = address ? (
-      <div className={cs('address-container', 'flex-center-container')}>
-        <div style={{flex: 1}}>
-          <span>{address}</span>
-        </div>
-        <div style={{flex: 1}}>
-          <button className="btn-showmap" onClick={this.onShowLocationClick}>查看地图</button>
-        </div>
-      </div>
-    ) : (
-      <div className={cs('address-container', 'flex-center-container')}>
-        <span>位置获取中...</span>
-      </div>
-    )
-    const signButton = address ? (
-      <img className="sign-button" src={signButtonURL} onClick={this.onSignClick}/>
-    ) : (
-      <img className="sign-button" src={preSignButtonURL}/>
-    )
-    const currentTimeObject = getCurrentTimeObject()
-    if (!isAllLoaded)
-      return <Loading />
+    const { userCode, userDetail, wxConfig, isInitialSucceed, isWxConfigLoading, location,
+      address, isSigning, remarkText, remarkURL } = this.props
+
     return (
-      <div className="container">
-        <MenuHeaderContainer
-          rightLabel="查询"
-          handleRightClick={() => {
-            history.push('/waiqin/childUsers')
-          }}
-        />
-        <div className={cs('time-container', 'flex-center-container')}>
-          <div>
-            <Timer rootClass="time-text"/>
-          </div>
-          <div>
-            <span className="date-text">
-              {currentTimeObject.year}年{currentTimeObject.month}月{currentTimeObject.day}日
-            </span>
-          </div>
-        </div>
-        <div className={cs('sign-container', 'flex-center-container')}>
-          {signButton}
-          <div className="sign-footer">
-            <Link to="/waiqin/remark">添加备注...</Link>
-          </div>
-        </div>
-        {Address}
-      </div>
+      <SignContainer
+        userCode={userCode}
+        userDetail={userDetail}
+        wxConfig={wxConfig}
+        isInitialSucceed={isInitialSucceed}
+        isWxConfigLoading={isWxConfigLoading}
+        location={location}
+        address={address}
+        isSigning={isSigning}
+        remarkText={remarkText}
+        remarkURL={remarkURL}
+        onShowLocationClick={this.onShowLocationClick}
+        onSignClick={this.onSignClick}
+        onSearchBtnClick={this.onSearchBtnClick}
+      />
     )
   }
 }

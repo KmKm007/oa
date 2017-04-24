@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import actions from '../../Redux/actions'
@@ -46,7 +47,7 @@ class ListChildUserPage extends React.Component {
                 <li className="child-body">
                   <div className="child-body-left-container">
                     <span className="child-label">{user.name}</span>
-                    <span className="child-position">{`(${user.position})`}</span>
+                    <span className="child-position">{`(${user.position.name})`}</span>
                   </div>
                   <div>
                     <button className="show-history-btn" onClick={() => this.onUserClick(user.userId)}>查看</button>
