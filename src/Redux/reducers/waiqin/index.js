@@ -103,6 +103,14 @@ const changeWaiqinHistoryDates = (state, action) => {
   }
 }
 
+const saveWaiqinRemarkImage = (state, action) => {
+  const { imageLocalId } = action
+  return {
+    ...state,
+    remarkURL: imageLocalId
+  }
+}
+
 const waiqinReducers = (state = inititalState, action) => {
   switch(action.type) {
     case actionTypes.RECEIVE_LOCATION:
@@ -125,6 +133,8 @@ const waiqinReducers = (state = inititalState, action) => {
       return receiveWaiqinHistory(state, action)
     case actionTypes.CHANGE_WAIQIN_HISTORY_DATES:
       return changeWaiqinHistoryDates(state, action)
+    case actionTypes.SAVE_WAIQIN_REMARK_IMAGE:
+      return saveWaiqinRemarkImage(state, action)
     default:
       return state
   }

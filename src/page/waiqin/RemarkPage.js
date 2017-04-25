@@ -5,6 +5,7 @@ import createHistory from 'history/createHashHistory'
 import cs from 'classnames'
 import actions from '../../Redux/actions'
 
+
 const history = createHistory()
 
 class RemarkPage extends React.Component {
@@ -24,13 +25,19 @@ class RemarkPage extends React.Component {
   }
 
   render () {
-    const {remarkText} = this.props
+    const { remarkText, remarkURL, fetchRemarkImage } = this.props
+    const imageSrc = remarkURL || require('../../images/addImage.png')
+    const imageClickHandler = remarkURL ? () => {} : fetchRemarkImage
     return (
       <div className="container">
           <MenuHeaderContainer/>
           <div className="remark-page-container">
             <div className="remark-photo-container">
-              <img className="remark-photo-btn" src={require('../../images/addImage.png')}/>
+              <img
+                className="remark-photo-btn"
+                src={imageSrc}
+                onClick={imageClickHandler}
+              />
             </div>
             <div className="remark-text-container">
               <header className="remark-text-container-header">添加签到文字描述</header>
@@ -56,7 +63,8 @@ const stateToProps = state => ({
 })
 
 const dispatchToProps = dispatch => ({
-  handleSaveRemark: (remarkText, remarkURL) => dispatch(actions.saveWaiqinRemark(remarkText, remarkURL))
+  handleSaveRemark: (remarkText, remarkURL) => dispatch(actions.saveWaiqinRemark(remarkText, remarkURL)),
+  fetchRemarkImage: () => dispatch(actions.fetchWaiqinRemarkImage())
 })
 
 export default connect(stateToProps, dispatchToProps)(RemarkPage)

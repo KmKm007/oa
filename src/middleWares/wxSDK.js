@@ -37,3 +37,24 @@ export const showLocation = locationConfig => {
     scale: locationConfig.scale // 地图缩放级别,整形值,范围从1~28。默认为16
   })
 }
+
+export const chooseImage = callback => {
+  wx.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['camera'],
+    success: resp => {
+      callback(resp)
+    }
+  })
+}
+
+export const uploadImage = (imageLocalId, callback) => {
+  wx.uploadImage({
+    localId: imageLocalId,
+    isShowProgressTips: 1,
+    success: resp => {
+      callback(resp.serverId)
+    }
+  })
+}

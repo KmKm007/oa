@@ -200,6 +200,7 @@ ul {
 }
 
 .remark-photo-container {
+  height: 40vw;
   display: flex;
   flex: 1;
   padding-top: 1.5rem;
@@ -207,7 +208,7 @@ ul {
 
 .remark-photo-btn {
   width: 100%;
-  height: 40vw;
+  height: 100%;
 }
 
 .remark-text-area {

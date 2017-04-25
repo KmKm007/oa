@@ -1,6 +1,6 @@
 import actionTypes from '../actionTypes'
-import { getAddress, saveSignRecord, getWaiqinHistory } from '../../middleWares/api'
-import { getLocation } from '../../middleWares/wxSDK'
+import { getAddress, saveSignRecord, getWaiqinHistory, postWaiqinRemarkImage } from '../../middleWares/api'
+import { getLocation, chooseImage, uploadImage } from '../../middleWares/wxSDK'
 
 export const requestLocation = () => ({
   type: actionTypes.REQUEST_LOCATION
@@ -99,3 +99,18 @@ export const changeWaiqinHistoryDates = (beginTime, endTime) => ({
   beginTime,
   endTime
 })
+
+export const saveWaiqinRemarkImage = imageLocalId => ({
+  type: actionTypes.SAVE_WAIQIN_REMARK_IMAGE,
+  imageLocalId
+})
+
+export const fetchWaiqinRemarkImage = () => dispatch => {
+  chooseImage(resp => {
+    const imageId = resp.localIds[0]
+    dispatch(saveWaiqinRemarkImage(imageId))
+    uploadImage(imageId, mediaId => {
+      postWaiqinRemarkImage(mediaId)
+    })
+  })
+}

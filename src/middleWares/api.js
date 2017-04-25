@@ -1,7 +1,8 @@
 import 'whatwg-fetch'
+import apiURL from './apiURL.json'
 
 export const getWxConfig = (callback, failCallback) => {
-  const url = 'http://10.17.1.157:8888/OA/wx/getWxConfig'
+  const url = apiURL.getWxConfigURL
   fetch(url, {
     method: 'GET',
     headers: {
@@ -19,7 +20,7 @@ export const getWxConfig = (callback, failCallback) => {
 }
 
 export const postCodeToServer = (code, callback, failCallback) => {
-  const url = 'http://10.17.1.157:8888/OA/wx/getUserId?code=' + code
+  const url = `${apiURL.postCodeToServerURL}?code=${code}`
   fetch(url, {
     method: 'GET',
     headers: {
@@ -38,7 +39,7 @@ export const postCodeToServer = (code, callback, failCallback) => {
 
 export const getAddress = (location, callback, failCallback) => {
   const { longitude, latitude } = location
-  const url = 'http://10.17.1.157:8888/OA/amap/getAddress?' + 'longitude=' + longitude + '&latitude=' + latitude
+  const url = `${apiURL.getAddressURL}?longitude=${longitude}&latitude=${latitude}`
   fetch(url, {
     method: 'GET',
     headers: {
@@ -56,7 +57,7 @@ export const getAddress = (location, callback, failCallback) => {
 }
 
 export const getUserDetailByCode = (code, callback, failCallback) => {
-  const url = 'http://10.17.1.157:8888/OA/wx/getUserDetailByCode?code=' + code
+  const url = `${apiURL.getUserDetailByCodeURL}?code=${code}`
   fetch(url, {
     method: 'GET',
     headers: {
@@ -74,7 +75,7 @@ export const getUserDetailByCode = (code, callback, failCallback) => {
 }
 
 export const getUserDetailById = (userId, callback, failCallback) => {
-  const url = 'http://10.17.1.157:8888/OA/wx/getUserDetailById?userId=' + userId
+  const url = `${apiURL.getUserDetailByIdURL}?userId=${userId}`
   fetch(url, {
     method: 'GET',
     headers: {
@@ -99,7 +100,7 @@ export const saveSignRecord = (params, callback) => {
     remarkText,
     remarkURL
   } = params
-  const url = 'http://10.17.1.157:8888/OA//api/waiqin/sign'
+  const url = apiURL.saveSignRecordURL
   const body = `longitude=${location.longitude}&latitude=${location.latitude}&address=${address}&userId=${userId}&remarkText=${remarkText}&remarkURL=${remarkURL}`
   fetch(url, {
     method: 'POST',
@@ -115,7 +116,7 @@ export const saveSignRecord = (params, callback) => {
 }
 
 export function getChildList(userId, callback, failCallback) {
-  const url = 'http://10.17.1.157:8888/Authentication/employee/getChildList'
+  const url = apiURL.getChildListURL
   const body = `code=${userId}`
   fetch(url, {
     method: 'POST',
@@ -135,7 +136,7 @@ export function getChildList(userId, callback, failCallback) {
 }
 
 export function getWaiqinHistory(params, callback, failCallback) {
-  const url = 'http://10.17.1.157:8888/OA/api/waiqin/history'
+  const url = apiURL.getWaiqinHistoryURL
   const { userId, beginTime, endTime } = params
   let body = `userId=${userId}`
   if (beginTime && endTime) {
@@ -154,6 +155,26 @@ export function getWaiqinHistory(params, callback, failCallback) {
       callback(json.dataList)
     } else {
       failCallback(json.message)
+    }
+  })
+}
+
+export const postWaiqinRemarkImage = (mediaId, callback, failCallback) => {
+  const url = apiURL.postWaiqinRemarkImageurl
+  const body = `mediaId=${mediaId}`
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body
+  })
+  .then(resp => resp.json())
+  .then(json => {
+    if (json.status === 0) {
+      callback()
+    } else {
+      failCallback()
     }
   })
 }
