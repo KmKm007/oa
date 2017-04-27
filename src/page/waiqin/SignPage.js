@@ -78,8 +78,8 @@ class WaiqinPage extends React.Component {
   }
 
   onSignClick = () => {
-    const {address, location, userDetail, remarkText, remarkURL, handleSign } = this.props
-    handleSign(location, address, userDetail.userId, remarkText, remarkURL)
+    const {address, location, userDetail, remarkText, remarkImageId, handleSign } = this.props
+    handleSign(location, address, userDetail.userId, remarkText, remarkImageId)
   }
 
   onShowLocationClick = () => {
@@ -100,7 +100,7 @@ class WaiqinPage extends React.Component {
 
   render() {
     const { userCode, userDetail, wxConfig, isInitialSucceed, isWxConfigLoading, location,
-      address, isSigning, remarkText, remarkURL } = this.props
+      address, isSigning } = this.props
 
     return (
       <SignContainer
@@ -112,8 +112,6 @@ class WaiqinPage extends React.Component {
         location={location}
         address={address}
         isSigning={isSigning}
-        remarkText={remarkText}
-        remarkURL={remarkURL}
         onShowLocationClick={this.onShowLocationClick}
         onSignClick={this.onSignClick}
         onSearchBtnClick={this.onSearchBtnClick}
@@ -138,7 +136,7 @@ const stateToProps = state => ({
   address: state.waiqin.address,
   isSigning: state.waiqin.isSigning,
   remarkText:state.waiqin.remarkText,
-  remarkURL: state.waiqin.remarkURL
+  remarkImageId: state.waiqin.remarkImageId
 })
 
 const dispatchToProps = dispatch => ({
@@ -151,13 +149,13 @@ const dispatchToProps = dispatch => ({
   initialWxConfig: config => {
     dispatch(actions.wxFetchInitial(config))
   },
-  handleSign: (location, address, userId, remarkText, remarkURL) => {
+  handleSign: (location, address, userId, remarkText, remarkImageId) => {
     const params = {
       location,
       address,
       userId,
       remarkText,
-      remarkURL
+      remarkImageId
     }
     dispatch(actions.pushSignRecord(params))
   },

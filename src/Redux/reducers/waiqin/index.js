@@ -1,12 +1,16 @@
 import actionTypes from '../../actionTypes'
+import { pictureServer } from '../../../middleWares/apiURL'
 
 const inititalState = {
   location: null,
   address: null,
   signTime: null,
   isSigning: null,
+  isUploadingImage: null,
   remarkText: null,
-  remarkURL: null,
+  remarkImageURL: null,
+  remarkImageLocalId: null,
+  remarkImageId: null,
   isHistoryLoading: null,
   historys: [],
   historyBy: null,
@@ -55,11 +59,10 @@ const postSignRecordSucceed = (state, action) => {
 }
 
 const saveWaiqinRemark = (state, action) => {
-  const { remarkText, remarkURL } = action
+  const { remarkText } = action
   return {
     ...state,
-    remarkText,
-    remarkURL
+    remarkText
   }
 }
 
@@ -79,6 +82,10 @@ const requestWaiqinHistory = state => {
 
 const receiveWaiqinHistory = (state, action) => {
   const { params, signRecords }  = action
+  signRecords.map(record => {
+    if (record.image)
+      record.image.url = pictureServer + record.image.realURI
+  })
   const userId = params.userId
   const historys = state.historys.filter(history => history.userId !== userId)
   historys.push({
@@ -103,11 +110,28 @@ const changeWaiqinHistoryDates = (state, action) => {
   }
 }
 
+const beginUploadWaiqinRemarkImage = (state) => {
+  return {
+    ...state,
+    isUploadingImage: true
+  }
+}
+
 const saveWaiqinRemarkImage = (state, action) => {
   const { imageLocalId } = action
   return {
     ...state,
-    remarkURL: imageLocalId
+    remarkImageLocalId: imageLocalId
+  }
+}
+
+const receiveWaiqinRemarkImageURI = (state, action) => {
+  const { imageId, imageURI } = action
+  return {
+    ...state,
+    isUploadingImage: false,
+    remarkImageId: imageId,
+    remarkImageURL: pictureServer + imageURI
   }
 }
 
@@ -135,6 +159,10 @@ const waiqinReducers = (state = inititalState, action) => {
       return changeWaiqinHistoryDates(state, action)
     case actionTypes.SAVE_WAIQIN_REMARK_IMAGE:
       return saveWaiqinRemarkImage(state, action)
+    case actionTypes.RECEIVE_WAIQIN_REMARK_IMAGE_URI:
+      return receiveWaiqinRemarkImageURI(state, action)
+    case actionTypes.BEGIN_UPLOAD_WAIQIN_REMARK_IMAGE:
+      return beginUploadWaiqinRemarkImage(state)
     default:
       return state
   }

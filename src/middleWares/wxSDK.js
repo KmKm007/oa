@@ -52,9 +52,19 @@ export const chooseImage = callback => {
 export const uploadImage = (imageLocalId, callback) => {
   wx.uploadImage({
     localId: imageLocalId,
-    isShowProgressTips: 1,
+    isShowProgressTips: 0,
     success: resp => {
       callback(resp.serverId)
     }
+  })
+}
+
+export const previewImage = imageArray => {
+  if (typeof(imageArray) === 'string') {
+    imageArray = [imageArray]
+  }
+  wx.previewImage({
+    current: imageArray[0],
+    urls: imageArray
   })
 }

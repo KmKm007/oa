@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-import apiURL from './apiURL.json'
+import apiURL from './apiURL'
 
 export const getWxConfig = (callback, failCallback) => {
   const url = apiURL.getWxConfigURL
@@ -98,10 +98,10 @@ export const saveSignRecord = (params, callback) => {
     address,
     userId,
     remarkText,
-    remarkURL
+    remarkImageId
   } = params
   const url = apiURL.saveSignRecordURL
-  const body = `longitude=${location.longitude}&latitude=${location.latitude}&address=${address}&userId=${userId}&remarkText=${remarkText}&remarkURL=${remarkURL}`
+  const body = `longitude=${location.longitude}&latitude=${location.latitude}&address=${address}&userId=${userId}&remarkText=${remarkText}&remarkImageId=${remarkImageId}`
   fetch(url, {
     method: 'POST',
     headers: {
@@ -159,9 +159,10 @@ export function getWaiqinHistory(params, callback, failCallback) {
   })
 }
 
-export const postWaiqinRemarkImage = (mediaId, callback, failCallback) => {
-  const url = apiURL.postWaiqinRemarkImageurl
-  const body = `mediaId=${mediaId}`
+export const postWaiqinRemarkImage = (params, callback, failCallback) => {
+  const url = apiURL.postWaiqinRemarkImageURL
+  const { mediaId, userId } = params
+  const body = `mediaId=${mediaId}&userId=${userId}`
   fetch(url, {
     method: 'POST',
     headers: {
@@ -172,9 +173,9 @@ export const postWaiqinRemarkImage = (mediaId, callback, failCallback) => {
   .then(resp => resp.json())
   .then(json => {
     if (json.status === 0) {
-      callback()
+      callback(json.imageId, json.imageURI)
     } else {
-      failCallback()
+      failCallback(json.message)
     }
   })
 }

@@ -12,7 +12,7 @@ const preSignButtonURL = require('../../images/preSign.png')
 
 class SignContainer extends React.Component {
   static propTypes = {
-    userDetail: PropTypes.object.isRequired,
+    userDetail: PropTypes.object,
     address: PropTypes.string,
     onShowLocationClick: PropTypes.func.isRequired,
     onSignClick: PropTypes.func.isRequired

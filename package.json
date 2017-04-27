@@ -76,6 +76,7 @@
     "moment": "^2.18.1",
     "normalize.css": "^4.0.0",
     "npm": "^4.4.4",
+    "photoswipe": "^4.1.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.5.2",

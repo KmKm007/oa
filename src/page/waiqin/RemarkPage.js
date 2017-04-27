@@ -4,6 +4,8 @@ import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import createHistory from 'history/createHashHistory'
 import cs from 'classnames'
 import actions from '../../Redux/actions'
+import { previewImage } from '../../middleWares/wxSDK'
+import Loading from '../../components/Loading'
 
 
 const history = createHistory()
@@ -19,15 +21,18 @@ class RemarkPage extends React.Component {
 
   onConfirmClick = () => {
     const remarkText = this.refs.remarkText.value
-    const remarkURL = ''
+    const remarkURL = this.props.remarkURL
     this.props.handleSaveRemark(remarkText, remarkURL)
     history.replace('/waiqin/sign')
   }
 
   render () {
-    const { remarkText, remarkURL, fetchRemarkImage } = this.props
-    const imageSrc = remarkURL || require('../../images/addImage.png')
-    const imageClickHandler = remarkURL ? () => {} : fetchRemarkImage
+    const { remarkText, remarkImageLocalId,
+      fetchRemarkImage, remarkImageURL,
+      userId, isUploadingImage } = this.props
+    const imageSrc = remarkImageLocalId || require('../../images/addImage.png')
+    const imageClickHandler = remarkImageLocalId ? () => previewImage(remarkImageURL) : () => fetchRemarkImage(userId)
+
     return (
       <div className="container">
           <MenuHeaderContainer/>
@@ -52,6 +57,7 @@ class RemarkPage extends React.Component {
               <button className="remark-confirm-btn" onClick={this.onConfirmClick}>确&nbsp;&nbsp;定</button>
             </div>
           </div>
+          { isUploadingImage ? <Loading isFullScreen={true} loadingText={'图片上传中...'}/> : null }
       </div>
     )
   }
@@ -59,12 +65,15 @@ class RemarkPage extends React.Component {
 
 const stateToProps = state => ({
   remarkText: state.waiqin.remarkText,
-  remarkURL: state.waiqin.remarkURL
+  remarkImageLocalId: state.waiqin.remarkImageLocalId,
+  remarkImageURL: state.waiqin.remarkImageURL,
+  userId: state.user.detail.userId,
+  isUploadingImage: state.waiqin.isUploadingImage
 })
 
 const dispatchToProps = dispatch => ({
   handleSaveRemark: (remarkText, remarkURL) => dispatch(actions.saveWaiqinRemark(remarkText, remarkURL)),
-  fetchRemarkImage: () => dispatch(actions.fetchWaiqinRemarkImage())
+  fetchRemarkImage: userId => dispatch(actions.fetchWaiqinRemarkImage(userId))
 })
 
 export default connect(stateToProps, dispatchToProps)(RemarkPage)
