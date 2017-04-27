@@ -7,20 +7,36 @@ import RemarkPage from '../page/waiqin/RemarkPage'
 import SignHistoryPage from '../page/waiqin/SignHistoryPage'
 import WaiqinIntroductionPage from '../page/waiqin/WaiqinIntroductionPage'
 import PreViewer from '../components/PreViewer'
+import store from '../Redux/store'
 
-const AppRouter = () => (
-  <Router>
-      <div>
-        <Route path="/waiqin/sign" component={SignPage}/>
-        <Route path="/waiqin/signSucceed" component={SignSucceedPage}/>
-        <Route path="/waiqin/remark" component={RemarkPage} />
-        <Route path="/waiqin/childUsers" component={ListChildUserPage}/>
-        <Route path="/waiqin/history" component={SignHistoryPage}/>
-        <Route path="/waiqin/introduction" component={WaiqinIntroductionPage} />
-        <Route path="/test" component={PreViewer}/>
+class AppRouter extends React.Component {
+  render () {
+    return (
+      <Router>
+          <div>
+            <Route path="/waiqin/sign" component={SignPage}/>
+            <PrivateRoute path="/waiqin/signSucceed" component={SignSucceedPage}/>
+            <PrivateRoute path="/waiqin/remark" component={RemarkPage} />
+            <PrivateRoute path="/waiqin/childUsers" component={ListChildUserPage}/>
+            <PrivateRoute path="/waiqin/history" component={SignHistoryPage}/>
+            <Route path="/waiqin/introduction" component={WaiqinIntroductionPage} />
+            <Route path="/test" component={PreViewer}/>
+            <Redirect from="/" to="/waiqin/sign"/>
+          </div>
+      </Router>
+    )
+  }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const userDetail = store.getState().user.detail
+  return <Route {...rest} render={props => (
+      userDetail ? (
+        <Component {...props}/>
+      ) : (
         <Redirect from="/" to="/waiqin/sign"/>
-      </div>
-  </Router>
-)
+      )
+    )}/>
+}
 
 export default AppRouter

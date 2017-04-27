@@ -9,7 +9,9 @@ const SignBody = ({ onSignClick, onShowLocationClick, address }) => {
   return (
     <div>
       <div className={cs('sign-container', 'flex-center-container')}>
-        <img className="sign-button" src={signButtonURL} onClick={onSignClick}/>
+        <div className="sign-button-container">
+          <img className="sign-button" src={signButtonURL} onClick={onSignClick}/>
+        </div>
         <div className="sign-footer">
           <Link to="/waiqin/remark">添加备注...</Link>
         </div>

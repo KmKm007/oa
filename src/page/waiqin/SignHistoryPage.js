@@ -23,17 +23,19 @@ class SignHistoryHistory extends React.Component {
 
   componentWillMount() {
     const {title, historyBy } = this.props
-    document.title = `${historyBy}${title}`
+    document.title = `${historyBy.name}${title}`
   }
 
   componentDidMount() {
-    const { historyDates, historyBy: userId, handleFetchWaiqinHistory} = this.props
+    const { historyDates, historyBy, handleFetchWaiqinHistory} = this.props
+    const userId = historyBy.userId
     handleFetchWaiqinHistory(userId, historyDates.beginTime, historyDates.endTime)
   }
 
   componentWillReceiveProps(nextProps) {
     const { historyDates: nextHistoryDates } = nextProps
-    const { historyDates: currentHistoryDates, historyBy: userId } = this.props
+    const { historyDates: currentHistoryDates, historyBy } = this.props
+    const userId = historyBy.userId
     if (currentHistoryDates.beginTime !== nextHistoryDates.beginTime
       || currentHistoryDates.endTime !== nextHistoryDates.endTime) {
         this.props.handleFetchWaiqinHistory(userId, nextProps.beginTime, nextProps.endTime)
@@ -44,7 +46,7 @@ class SignHistoryHistory extends React.Component {
 
   handleDateSelected = (beginTime, endTime) => {
     this.props.handleHistoryDatesChange(beginTime, endTime)
-    const userId = this.props.historyBy
+    const userId = this.props.historyBy.userId
     this.props.handleFetchWaiqinHistory(userId, beginTime, endTime)
   }
 
@@ -77,7 +79,7 @@ class SignHistoryHistory extends React.Component {
 
 const mapStateToProps = state => {
   const { historys, historyBy, historyDates, isHistoryLoading } = state.waiqin
-  const waiqinHistory = historys.find(h => h.userId === historyBy)
+  const waiqinHistory = historys.find(h => h.userId === historyBy.userId)
   return {
     historyBy,
     signRecords: waiqinHistory ? waiqinHistory.signRecords : null,

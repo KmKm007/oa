@@ -66,9 +66,10 @@ export const saveWaiqinRemark = (remarkText, remarkURL) => ({
   remarkURL
 })
 
-export const changeWaiQinHistoryBy = userId => ({
+export const changeWaiQinHistoryBy = (userId, name) => ({
   type: actionTypes.CHANGE_WAIQIN_HISTORY_BY,
-  userId
+  userId,
+  name
 })
 
 

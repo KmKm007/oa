@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom'
 import AppRouter from './router'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import 'vconsole'
 import './styles/App.scss'
 import store from './Redux/store'
 
 injectTapEventPlugin()
+
+if (process.env.NODE_ENV === 'production') {
+  require('vconsole')
+}
 
 
 ReactDOM.render(

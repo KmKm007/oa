@@ -115,9 +115,16 @@ ul {
   border: 5px solid red;
 }
 
-.sign-button {
-  width: 50vw;
+.sign-button-container {
+  $length: 50vw;
+  height: $length;
+  .sign-button {
+    width: $length;
+    height: $length;
+  }
 }
+
+
 
 .sign-footer {
   margin-top: 10px;

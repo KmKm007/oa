@@ -25,9 +25,9 @@ class ListChildUserPage extends React.Component {
     this.props.fetchUserChildren(userId)
   }
 
-  onUserClick = userId => {
+  onUserClick = (userId, name) => {
     userId = userId || this.props.userDetail.userId
-    this.props.handleHistoryByChange(userId)
+    this.props.handleHistoryByChange(userId, name)
     history.push('/waiqin/history')
   }
 
@@ -50,7 +50,7 @@ class ListChildUserPage extends React.Component {
                     <span className="child-position">{`(${user.position.name})`}</span>
                   </div>
                   <div>
-                    <button className="show-history-btn" onClick={() => this.onUserClick(user.userId)}>查看</button>
+                    <button className="show-history-btn" onClick={() => this.onUserClick(user.userId, user.name)}>查看</button>
                   </div>
                 </li>
               ))
@@ -72,7 +72,7 @@ class ListChildUserPage extends React.Component {
                 <span className="child-position">{`(${userDetail.position})`}</span>
               </div>
               <div>
-                <button className="show-history-btn" onClick={() => this.onUserClick(userDetail.userId)}>查看</button>
+                <button className="show-history-btn" onClick={() => this.onUserClick(userDetail.userId, '我')}>查看</button>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => ({
   fetchUserChildren: userId => dispatch(actions.fetchUserChildren(userId)),
-  handleHistoryByChange: userId => dispatch(actions.changeWaiQinHistoryBy(userId))
+  handleHistoryByChange: (userId, name) => dispatch(actions.changeWaiQinHistoryBy(userId, name))
 })
 
 export default connect(stateToProps, dispatchToProps)(ListChildUserPage)

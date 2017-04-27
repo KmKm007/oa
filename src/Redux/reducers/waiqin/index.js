@@ -73,9 +73,13 @@ const saveWaiqinRemark = (state, action) => {
 }
 
 const changeWaiQinHistoryBy = (state, action) => {
+  const { userId, name } = action
   return {
     ...state,
-    historyBy: action.userId
+    historyBy: {
+      userId,
+      name
+    }
   }
 }
 
