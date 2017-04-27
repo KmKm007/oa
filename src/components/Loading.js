@@ -11,7 +11,7 @@ const style = {
 
 const fullScreenStyle = {
   textAlign: 'center',
-  paddingTop: '50px',
+  paddingTop: '40%',
   position: 'fixed',
   top: 0,
   left: 0,

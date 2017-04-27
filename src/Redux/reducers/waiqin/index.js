@@ -54,7 +54,13 @@ const postSignRecordSucceed = (state, action) => {
   return {
     ...state,
     isSigning: false,
-    signTime: result.signTime
+    signTime: result.signTime,
+    isUploadingImage: null,
+    remarkText: null,
+    remarkImageURL: null,
+    remarkImageLocalId: null,
+    remarkImageId: null,
+    historys: []
   }
 }
 

@@ -1,9 +1,11 @@
 import wx from 'weixin-js-sdk'
 import { getQueryString } from '../utils/urlUtil'
 
+const dubug = (process.env.NODE_ENV !== 'production') ? true : false
+
 export const inital = (config, callback) => {
   wx.config({
-    debug: false,
+    debug: dubug,
     appId: config.corpid,
     timestamp: config.timestamp,
     nonceStr: config.nonceStr,

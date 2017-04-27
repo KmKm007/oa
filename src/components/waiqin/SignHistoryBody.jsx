@@ -32,7 +32,7 @@ const SignHistoryBody = ({ signRecords, handleRemarkClick }) => {
                 </div>
               </div>
             </div>
-            { ( h.remarkText || h.imageId ) ?
+            { ( h.remarkText || h.image ) ?
               <div className="history-item-photo-container">
                 <button onClick={() => handleRemarkClick(h.remarkText, h.image.url)}>备注</button>
               </div>

@@ -1,5 +1,7 @@
 /* Base Application Styles */
 
+$baseColor: #333333;
+
 @media (max-width: 320px) {
   html {
     font-size: 12px;
@@ -18,8 +20,12 @@
   }
 }
 
+.baseColor {
+  color: $baseColor;
+}
+
 body {
-  color: #333333;
+  color: $baseColor;
   background: rgb(242, 242, 242);
   margin: 0;
 }
@@ -93,7 +99,7 @@ ul {
 }
 
 .time-container {
-  flex-grow: 2;
+  height: 20vh;
   flex-direction: column;
 }
 
@@ -119,8 +125,12 @@ ul {
 }
 
 .address-container {
+  margin-top: 10vh;
   flex-direction: column;
-  flex: 6
+}
+
+.showmap-container {
+  margin-top: 2vh;
 }
 
 .flex-center-container {
