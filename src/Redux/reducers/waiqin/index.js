@@ -17,7 +17,8 @@ const inititalState = {
   historyDates: {
     beginTime: Date.now() - (7 * 3600 * 24 * 1000),
     endTime: Date.now()
-  }
+  },
+  errors: []
 }
 
 const receiveLocation = (state, action) => {

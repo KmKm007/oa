@@ -1,22 +1,42 @@
 import React from 'react'
-import Calander from '../../containers/Calander'
-import Loading from '../../components/Loading'
 import SignHistoryBody from '../../components/waiqin/SignHistoryBody'
 import SignHistoryHeader from '../../components/waiqin/SignHistoryHeader'
 import { parseToTimeObject } from '../../utils/DateUtil'
+import Calander from '../../containers/Calander'
+import PreViewer from '../../components/common/PreViewer'
+import Loading from '../../components/common/Loading'
 
 class SignHistoryContainer extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      isShowDatePicker: false
+      isShowDatePicker: false,
+      isShowRemark: false,
+      remark: null
     }
   }
 
   handleDateClick = () => {
     this.setState({
       isShowDatePicker: true
+    })
+  }
+
+  handleShowRemark = (remarkText, image) => {
+    this.setState({
+      isShowRemark: true,
+      remark: {
+        remarkText,
+        image
+      }
+    })
+  }
+
+  handlePreviewerDestory = () => {
+    this.setState({
+      isShowRemark: false,
+      remark: null
     })
   }
 
@@ -32,13 +52,13 @@ class SignHistoryContainer extends React.Component {
   }
 
   render () {
-    const { signRecords, historyDates, isHistoryLoading, handleRemarkClick } = this.props
+    const { signRecords, historyDates, isHistoryLoading } = this.props
     const beginTimeObject = parseToTimeObject(historyDates.beginTime)
     const endTimeObject = parseToTimeObject(historyDates.endTime)
     const WaiqinBody = (!isHistoryLoading && signRecords) ?
     <SignHistoryBody
       signRecords={signRecords}
-      handleRemarkClick={handleRemarkClick}
+      handleShowRemark={this.handleShowRemark}
     /> : <Loading loadingText="数据加载中..." />
     const Content = this.state.isShowDatePicker ?
       <Calander onSelect={this.onDateSelected} /> :
@@ -56,6 +76,16 @@ class SignHistoryContainer extends React.Component {
     return (
       <div>
         {Content}
+        {
+          this.state.isShowRemark ? (
+            <PreViewer
+              text={this.state.remark.remarkText}
+              image={this.state.remark.image}
+              handleDestory={this.handlePreviewerDestory}
+            />
+          )
+          : ''
+        }
       </div>
     )
   }

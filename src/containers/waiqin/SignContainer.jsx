@@ -2,24 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getCurrentTimeObject } from '../../utils/DateUtil'
 import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
-import Loading from '../../components/Loading'
+import Loading from '../../components/common/Loading'
 import SignHeader from '../../components/waiqin/SignHeader'
 import SignBody from '../../components/waiqin/SignBody'
 
 class SignContainer extends React.Component {
   static propTypes = {
-    userDetail: PropTypes.object,
     address: PropTypes.string,
     onShowLocationClick: PropTypes.func.isRequired,
     onSignClick: PropTypes.func.isRequired
   }
 
   render () {
-    const { isInitialSucceed, isWxConfigLoading, userDetail,
-       onSignClick, onShowLocationClick, onSearchBtnClick, address } = this.props
-    const isAllLoaded = isInitialSucceed && ( isWxConfigLoading === false ) && userDetail
-    if (!isAllLoaded)
-      return <Loading />
+    const { onSignClick, onShowLocationClick, onSearchBtnClick,
+            address } = this.props
     const content = address ? (
       <SignBody
         onSignClick={onSignClick}

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cs from 'classNames'
-import Timer from '../Timer'
+import Timer from '../common/Timer'
 
 const SignHeader = ({ currentTimeObject }) => {
   return (

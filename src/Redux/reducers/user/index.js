@@ -6,7 +6,7 @@ const initialState = {
   isUserCodeLoading: null,
   isUserDetailLoading: null,
   children: null,
-  errorMesgArray: []
+  errors: []
 }
 
 const receiveUserCode = (state, action) => {
@@ -47,31 +47,31 @@ const receiveUserDetailById = (state, action) => {
   }
 }
 
-const updateErrorArrayIfSucceed = (initErrorMesgArray,errorType) => {
-  const errorMesgArray = initErrorMesgArray.filter(mesg => mesg.errorType !== errorType)
-  return errorMesgArray
+const updateErrorArrayIfSucceed = (initErrors,errorType) => {
+  const errors = initErrors.filter(mesg => mesg.errorType !== errorType)
+  return errors
 }
 
 const receiveUserChildren = (state, action) => {
-  const errorMesgArray = updateErrorArrayIfSucceed(state.errorMesgArray,
+  const errors = updateErrorArrayIfSucceed(state.errors,
                           actionTypes.RECEVE_USER_CHILDREN_FAILED)
   return {
     ...state,
-    errorMesgArray,
+    errors,
     children: action.children
   }
 }
 
 const receiveUserDataFailed = (state, action) => {
   const { errorMesg, errorType }  = action
-  const errorMesgArray = state.errorMesgArray.filter(mesg => mesg.errorType !== errorType)
-  errorMesgArray.push({
+  const errors = state.errors.filter(mesg => mesg.errorType !== errorType)
+  errors.push({
     errorType,
     errorMesg
   })
   return {
     ...state,
-    errorMesgArray
+    errors
   }
 }
 

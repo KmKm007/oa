@@ -5,7 +5,7 @@ import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import actions from '../../Redux/actions'
 import actionTypes from '../../Redux/actionTypes'
 import createHistory from 'history/createHashHistory'
-import Loading from '../../components/Loading'
+import Loading from '../../components/common/Loading'
 
 const history = createHistory()
 
@@ -86,7 +86,7 @@ class ListChildUserPage extends React.Component {
 }
 
 const stateToProps = state => {
-  const errorObject = state.user.errorMesgArray.find(mesg => mesg.errorType === actionTypes.RECEIVE_USER_CHILDREN_FAILED)
+  const errorObject = state.user.errors.find(error => error.errorType === actionTypes.RECEIVE_USER_CHILDREN_FAILED)
   return {
     userDetail: state.user.detail,
     children: state.user.children,

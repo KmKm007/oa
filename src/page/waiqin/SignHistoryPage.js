@@ -4,7 +4,6 @@ import createHistory from 'history/createHashHistory'
 import { connect } from 'react-redux'
 import actions from '../../Redux/actions'
 import SignHistoryContainer from '../../containers/waiqin/SignHistoryContainer'
-import { previewImage } from '../../middleWares/wxSDK'
 
 const history = createHistory()
 
@@ -31,28 +30,11 @@ class SignHistoryHistory extends React.Component {
     const userId = historyBy.userId
     handleFetchWaiqinHistory(userId, historyDates.beginTime, historyDates.endTime)
   }
-
-  componentWillReceiveProps(nextProps) {
-    const { historyDates: nextHistoryDates } = nextProps
-    const { historyDates: currentHistoryDates, historyBy } = this.props
-    const userId = historyBy.userId
-    if (currentHistoryDates.beginTime !== nextHistoryDates.beginTime
-      || currentHistoryDates.endTime !== nextHistoryDates.endTime) {
-        this.props.handleFetchWaiqinHistory(userId, nextProps.beginTime, nextProps.endTime)
-      }
-  }
-
-
-
+  
   handleDateSelected = (beginTime, endTime) => {
     this.props.handleHistoryDatesChange(beginTime, endTime)
     const userId = this.props.historyBy.userId
     this.props.handleFetchWaiqinHistory(userId, beginTime, endTime)
-  }
-
-  handleRemarkClick = (remarkText, remarkImageURL) => {
-    if (remarkImageURL)
-      previewImage(remarkImageURL)
   }
 
   render () {
@@ -70,7 +52,6 @@ class SignHistoryHistory extends React.Component {
           historyDates={historyDates}
           isHistoryLoading={isHistoryLoading}
           handleDateSelected={this.handleDateSelected}
-          handleRemarkClick={this.handleRemarkClick}
         />
       </div>
     )

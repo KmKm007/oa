@@ -7,7 +7,8 @@ const initialState = {
   timestamp: null,
   signature: null,
   nonceStr: null,
-  url: null
+  url: null,
+  errors: []
 }
 
 const wxInitial = state => {
@@ -44,6 +45,21 @@ const receiveWxConfig = (state, action) => {
   }
 }
 
+const receiveWxConfigFailed = (state, action) => {
+  const nextErrors = state.errors
+  const { errorType, errorMesg } = action
+  nextErrors.filter(error => error.errorType !== errorType)
+  nextErrors.push({
+    errorType,
+    errorMesg
+  })
+  return {
+    isWxConfigLoading: false,
+    ...state,
+    errors: nextErrors
+  }
+}
+
 const wxReducer = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.WX_INITIAL:
@@ -54,6 +70,8 @@ const wxReducer = (state = initialState, action) => {
       return requestWxConfig(state)
     case actionTypes.RECEIVE_WX_CONFIG:
       return receiveWxConfig(state, action)
+    case actionTypes.RECEIVE_WX_CONFIG_FAILED:
+      return receiveWxConfigFailed(state, action)
     default:
       return state
   }

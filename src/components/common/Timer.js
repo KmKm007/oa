@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { parseToTimeObject } from '../utils/DateUtil'
+import { parseToTimeObject } from '../../utils/DateUtil'
 
 class Timer extends React.Component {
   constructor(props) {

@@ -5,7 +5,7 @@ import createHistory from 'history/createHashHistory'
 import cs from 'classnames'
 import actions from '../../Redux/actions'
 import { previewImage } from '../../middleWares/wxSDK'
-import Loading from '../../components/Loading'
+import Loading from '../../components/common/Loading'
 
 
 const history = createHistory()

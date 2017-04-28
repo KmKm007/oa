@@ -9,6 +9,10 @@ export const getWxConfig = (callback, failCallback) => {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
   })
+  .catch(e => {
+    failCallback(`${e}.网络超时！请求失败=.= ~`)
+
+  })
   .then(resp => resp.json())
   .then(json => {
     if (json.status === 0) {
@@ -93,13 +97,15 @@ export const getUserDetailById = (userId, callback, failCallback) => {
 }
 
 export const saveSignRecord = (params, callback) => {
-  const {
+  let {
     location,
     address,
     userId,
     remarkText,
     remarkImageId
   } = params
+  remarkText = remarkText || ''
+  remarkImageId = remarkImageId || remarkImageId
   const url = apiURL.saveSignRecordURL
   const body = `longitude=${location.longitude}&latitude=${location.latitude}&address=${address}&userId=${userId}&remarkText=${remarkText}&remarkImageId=${remarkImageId}`
   fetch(url, {

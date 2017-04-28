@@ -1,21 +1,20 @@
 import React from 'react'
-import PhotoSwipe from 'photoswipe/dist/photoswipe'
-import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default'
+import PhotoSwipe from 'photoswipe/dist/photoswipe.min'
+import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default.min'
 import 'photoswipe/dist/default-skin/default-skin.css'
 import 'photoswipe/dist/photoswipe.css'
 
 class PreViewer extends React.Component {
 
   componentDidMount() {
-    var openPhotoSwipe = function() {
       var pswpElement = document.querySelectorAll('.pswp')[0]
-
-      // build items array
+      const { text, image, handleDestory } = this.props
       var items = [
         {
-          src: 'https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_b.jpg',
-          w: 1800,
-          h: 1000
+          src: image ? image.url : '',
+          w: image ? image.width : 0,
+          h: image ? image.height : 0,
+          title: text || ''
         }
       ]
 
@@ -28,13 +27,13 @@ class PreViewer extends React.Component {
       }
 
       var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options)
+      if (typeof(handleDestory) === 'function') {
+        gallery.listen('destroy', handleDestory)
+      }
+
       gallery.init()
-    }
-
-    openPhotoSwipe()
-
-    document.getElementById('btn').onclick = openPhotoSwipe
   }
+
   render() {
     return (
       <div>

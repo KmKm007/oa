@@ -6,7 +6,7 @@ import ListChildUserPage from '../page/waiqin/ListChildUserPage'
 import RemarkPage from '../page/waiqin/RemarkPage'
 import SignHistoryPage from '../page/waiqin/SignHistoryPage'
 import WaiqinIntroductionPage from '../page/waiqin/WaiqinIntroductionPage'
-import PreViewer from '../components/PreViewer'
+import LoginPage from '../page/common/LoginPage'
 import store from '../Redux/store'
 
 class AppRouter extends React.Component {
@@ -20,8 +20,8 @@ class AppRouter extends React.Component {
             <PrivateRoute path="/waiqin/childUsers" component={ListChildUserPage}/>
             <PrivateRoute path="/waiqin/history" component={SignHistoryPage}/>
             <Route path="/waiqin/introduction" component={WaiqinIntroductionPage} />
-            <Route path="/test" component={PreViewer}/>
-            <Redirect from="/" to="/waiqin/sign"/>
+            <Route path="/login" component={LoginPage}></Route>
+            <Redirect from="/" to="/login"/>
           </div>
       </Router>
     )

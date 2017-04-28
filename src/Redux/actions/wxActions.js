@@ -26,10 +26,18 @@ export const receiveWxConfig = config => ({
   config
 })
 
+export const receiveWxConfigFailed = errorMesg => ({
+  type: actionTypes.RECEIVE_WX_CONFIG_FAILED,
+  errorMesg,
+  errorType: actionTypes.RECEIVE_WX_CONFIG_FAILED
+})
+
 export const fetchWxConfig = () => dispatch => {
   dispatch(requestWxConfig())
   getWxConfig(config => {
     dispatch(receiveWxConfig(config))
     dispatch(wxFetchInitial(config))
+  }, errorMesg => {
+    dispatch(receiveWxConfigFailed(errorMesg))
   })
 }
