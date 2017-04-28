@@ -3,6 +3,7 @@ import MenuHeaderContainer from '../../containers/MenuHeaderContainer'
 import createHistory from 'history/createHashHistory'
 import { connect } from 'react-redux'
 import actions from '../../Redux/actions'
+import { showLocation } from '../../middleWares/wxSDK'
 import SignHistoryContainer from '../../containers/waiqin/SignHistoryContainer'
 
 const history = createHistory()
@@ -30,11 +31,22 @@ class SignHistoryHistory extends React.Component {
     const userId = historyBy.userId
     handleFetchWaiqinHistory(userId, historyDates.beginTime, historyDates.endTime)
   }
-  
+
   handleDateSelected = (beginTime, endTime) => {
     this.props.handleHistoryDatesChange(beginTime, endTime)
     const userId = this.props.historyBy.userId
     this.props.handleFetchWaiqinHistory(userId, beginTime, endTime)
+  }
+
+  onShowLocationClick = (longitude, latitude, address) => {
+    const locationConfig = {
+      latitude,
+      longitude,
+      name: '签到位置',
+      address,
+      scale: 20
+    }
+    showLocation(locationConfig)
   }
 
   render () {
@@ -52,6 +64,7 @@ class SignHistoryHistory extends React.Component {
           historyDates={historyDates}
           isHistoryLoading={isHistoryLoading}
           handleDateSelected={this.handleDateSelected}
+          onShowLocationClick={this.onShowLocationClick}
         />
       </div>
     )

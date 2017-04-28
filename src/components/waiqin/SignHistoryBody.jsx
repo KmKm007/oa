@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { parseToTimeObject } from '../../utils/DateUtil'
+import ErrorMesg from '../common/ErrorMesg'
 
-const SignHistoryBody = ({ signRecords, handleShowRemark }) => {
+const SignHistoryBody = ({ signRecords, handleShowRemark, onShowLocationClick }) => {
   return signRecords.length > 0 ? (
     <ul className="history-container">
       {
@@ -27,7 +28,9 @@ const SignHistoryBody = ({ signRecords, handleShowRemark }) => {
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                     <path d="M0 0h24v24H0z" fill="none"/>
                   </svg>
-                  <span>{h.address}</span>
+                  <span onClick={() => {
+                      onShowLocationClick(h.longitude, h.latitude, h.address)
+                    }}>{h.address}</span>
                 </div>
                 { ( h.remarkText || h.image ) ?
                   <div className="history-item-photo-container">
@@ -49,9 +52,7 @@ const SignHistoryBody = ({ signRecords, handleShowRemark }) => {
       })}
     </ul>
   ) : (
-    <div className="errorMesg">
-      <span>无考勤记录！</span>
-    </div>
+    <ErrorMesg errorMesg="无考勤记录！"/>
   )
 }
 

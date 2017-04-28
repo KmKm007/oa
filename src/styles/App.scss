@@ -471,13 +471,14 @@ ul {
   margin-top: 0.4rem;
   flex: 1;
   div {
-    display: flex;
-    justify-content: space-between;
-    width: 3.6rem;
     color: #6f6f6f;
     font-size: 1rem;
     display: flex;
     align-items: center;
+  }
+
+  svg {
+    margin-right: 0.2rem;
   }
 }
 

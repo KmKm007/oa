@@ -52,13 +52,14 @@ class SignHistoryContainer extends React.Component {
   }
 
   render () {
-    const { signRecords, historyDates, isHistoryLoading } = this.props
+    const { signRecords, historyDates, isHistoryLoading, onShowLocationClick } = this.props
     const beginTimeObject = parseToTimeObject(historyDates.beginTime)
     const endTimeObject = parseToTimeObject(historyDates.endTime)
     const WaiqinBody = (!isHistoryLoading && signRecords) ?
     <SignHistoryBody
       signRecords={signRecords}
       handleShowRemark={this.handleShowRemark}
+      onShowLocationClick={onShowLocationClick}
     /> : <Loading loadingText="数据加载中..." />
     const Content = this.state.isShowDatePicker ?
       <Calander onSelect={this.onDateSelected} /> :

@@ -44,12 +44,20 @@ export const fetchUserDetailById = userId => dispatch => {
   dispatch(requestUserDetailById(userId))
   getUserDetailById(userId, userDetail => {
     dispatch(receiveUserDetailById(userDetail))
+  }, errorMesg => {
+    dispatch(receiveUserDetailByIdFailed(errorMesg))
   })
 }
 
 export const receiveUserDetailById = userDetail => ({
   type: actionTypes.RECEIVE_USER_DETAIL_BY_ID,
   userDetail
+})
+
+export const receiveUserDetailByIdFailed = errorMesg => ({
+  type: actionTypes.RECEIVE_USER_DETAIL_BY_ID_FAILED,
+  errorMesg,
+  errorType: actionTypes.RECEIVE_USER_DETAIL_BY_ID_FAILED
 })
 
 export const requestUserChildren = userId => ({

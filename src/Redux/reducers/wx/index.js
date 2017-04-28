@@ -1,4 +1,5 @@
 import actionTypes from '../../actionTypes'
+import ReducerUtil from '../../../utils/ReducerUtil'
 
 const initialState = {
   isInitialSucceed: null,
@@ -46,13 +47,9 @@ const receiveWxConfig = (state, action) => {
 }
 
 const receiveWxConfigFailed = (state, action) => {
-  const nextErrors = state.errors
+  const errors = state.errors
   const { errorType, errorMesg } = action
-  nextErrors.filter(error => error.errorType !== errorType)
-  nextErrors.push({
-    errorType,
-    errorMesg
-  })
+  const nextErrors = ReducerUtil.getNextErrors(errors, errorType, errorMesg)
   return {
     isWxConfigLoading: false,
     ...state,

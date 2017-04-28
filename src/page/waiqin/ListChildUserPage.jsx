@@ -44,13 +44,13 @@ class ListChildUserPage extends React.Component {
         content = (
           <ul>
             {children.map(user => (
-                <li className="child-body">
+                <li className="child-body" key={user.code}>
                   <div className="child-body-left-container">
                     <span className="child-label">{user.name}</span>
                     <span className="child-position">{`(${user.position.name})`}</span>
                   </div>
                   <div>
-                    <button className="show-history-btn" onClick={() => this.onUserClick(user.userId, user.name)}>查看</button>
+                    <button className="show-history-btn" onClick={() => this.onUserClick(user.code, user.name)}>查看</button>
                   </div>
                 </li>
               ))

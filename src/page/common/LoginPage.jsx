@@ -5,6 +5,7 @@ import createHistory from 'history/createHashHistory'
 import actions from '../../Redux/actions'
 import actionTypes from '../../Redux/actionTypes'
 import Loading from '../../components/common/Loading'
+import ErrorMesg from '../../components/common/ErrorMesg'
 
 const history = createHistory()
 
@@ -55,21 +56,25 @@ class LoginPage extends React.Component {
   }
 
   render () {
-    const { userDetail, isWxConfigLoading, errors } = this.props
-    if (!userDetail) {
+    const { userDetail, isWxConfigLoading, isUserDetailLoading, errors } = this.props
+    if (!userDetail && isUserDetailLoading) {
       return <Loading loadingText="登录中..." />
     } else if (isWxConfigLoading === true){
       return <Loading loadingText="应用初始化中..."/>
     }
+    const loginError = errors.find(e => e.errorType === actionTypes.RECEIVE_USER_DETAIL_BY_ID_FAILED)
+    if (loginError) {
+      return (
+        <ErrorMesg errorMesg={loginError.errorMesg}/>
+      )
+    }
     const wxConfigError = errors.find(e => e.errorType === actionTypes.RECEIVE_WX_CONFIG_FAILED)
     if (wxConfigError) {
       return (
-        <div className="errorMesg-container">
-          <span className="errorMesg">{wxConfigError.errorMesg}</span>
-        </div>
+        <ErrorMesg errorMesg={wxConfigError.errorMesg}/>
       )
     } else {
-      return <div>跳转中...</div>
+      return null
     }
   }
 }
@@ -84,9 +89,10 @@ const mapStateToProps = state => ({
     url: state.wx.url,
     timestamp: state.wx.timestamp
   },
+  isUserDetailLoading: state.user.isUserDetailLoading,
   isWxConfigLoading: state.wx.isWxConfigLoading,
   isInitialSucceed: state.wx.isInitialSucceed,
-  errors: state.wx.errors
+  errors: [ ...state.wx.errors, ...state.user.errors ]
 })
 
 const mapDispatchToProps = dispatch => {

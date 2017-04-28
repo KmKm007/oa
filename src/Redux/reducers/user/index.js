@@ -1,4 +1,5 @@
 import actionTypes from '../../actionTypes'
+import ReducerUtil from '../../../utils/ReducerUtil'
 
 const initialState = {
   userCode: null,
@@ -47,6 +48,17 @@ const receiveUserDetailById = (state, action) => {
   }
 }
 
+const receiveUserDetailByIdFailed = (state, action) => {
+  const errors = state.errors
+  const { errorType, errorMesg } = action
+  const nextErrors = ReducerUtil.getNextErrors(errors, errorType, errorMesg)
+  return {
+    ...state,
+    isUserDetailLoading: false,
+    errors: nextErrors
+  }
+}
+
 const updateErrorArrayIfSucceed = (initErrors,errorType) => {
   const errors = initErrors.filter(mesg => mesg.errorType !== errorType)
   return errors
@@ -85,6 +97,8 @@ const userReducer = (state = initialState, action) => {
       return receiveUserDetailByCode(state, action)
     case actionTypes.REQUEST_USER_DETAIL_BY_ID:
       return requestUserDetailById(state, action)
+    case actionTypes.RECEIVE_USER_DETAIL_BY_ID_FAILED:
+      return receiveUserDetailByIdFailed(state, action)
     case actionTypes.RECEIVE_USER_DETAIL_BY_ID:
       return receiveUserDetailById(state, action)
     case actionTypes.RECEIVE_USER_CHILDREN:

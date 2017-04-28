@@ -25,6 +25,10 @@ class WaiqinPage extends React.Component {
     document.title = this.props.title
   }
 
+  componentDidMount() {
+    this.props.fetchLocation()
+  }
+
   componentWillReceiveProps(nextProps) {
     const {
       location: currentLocation,
@@ -36,14 +40,7 @@ class WaiqinPage extends React.Component {
       isSigning: nextIsSigning
     } = nextProps
 
-    const {
-      fetchLocation,
-      fetchAddress
-    } = this.props
-
-    if (!currentLocation) {
-      fetchLocation()
-    }
+    const { fetchAddress } = this.props
 
     if (currentLocation !== nextLocation) {
       fetchAddress(nextLocation)

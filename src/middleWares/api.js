@@ -1,6 +1,8 @@
 import 'whatwg-fetch'
 import apiURL from './apiURL'
 
+const commonErrorMesg = '网络超时！请求失败 >_< '
+
 export const getWxConfig = (callback, failCallback) => {
   const url = apiURL.getWxConfigURL
   fetch(url, {
@@ -9,10 +11,6 @@ export const getWxConfig = (callback, failCallback) => {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
   })
-  .catch(e => {
-    failCallback(`${e}.网络超时！请求失败=.= ~`)
-
-  })
   .then(resp => resp.json())
   .then(json => {
     if (json.status === 0) {
@@ -20,6 +18,10 @@ export const getWxConfig = (callback, failCallback) => {
     } else {
       failCallback(json.message)
     }
+  })
+  .catch(e => {
+    if (typeof(failCallback) === 'function')
+      failCallback(`${e}\r\n${commonErrorMesg}`)
   })
 }
 
@@ -50,6 +52,10 @@ export const getAddress = (location, callback, failCallback) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
+  .catch(e => {
+    failCallback(`${e}\r\n${commonErrorMesg}`)
+
+  })
   .then(resp => resp.json())
   .then(json => {
     if (json.status === 0) {
@@ -79,20 +85,29 @@ export const getUserDetailByCode = (code, callback, failCallback) => {
 }
 
 export const getUserDetailById = (userId, callback, failCallback) => {
-  const url = `${apiURL.getUserDetailByIdURL}?userId=${userId}`
+  const url = apiURL.getUserDetailByIdURL
   fetch(url, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    },
+    body: `userId=${userId}`
+  })
+  .then(resp => {
+    if (resp.ok) {
+      return resp.json()
     }
   })
-  .then(resp => resp.json())
   .then(json => {
     if (json.status === 0) {
       callback(json.user)
     } else {
       failCallback(json.message)
     }
+  })
+  .catch(e => {
+    if (typeof(failCallback) === 'function')
+      return failCallback(`${e}\r\n${commonErrorMesg}`)
   })
 }
 
