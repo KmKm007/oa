@@ -5,13 +5,9 @@ import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import './styles/App.scss'
 import store from './Redux/store'
+// import 'vconsole'
 
 injectTapEventPlugin()
-
-if (process.env.NODE_ENV === 'production') {
-  require('vconsole')
-}
-
 
 ReactDOM.render(
   <Provider store={store}>
