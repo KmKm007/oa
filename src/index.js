@@ -4,8 +4,8 @@ import AppRouter from './router'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import './styles/App.scss'
+import './styles/common.scss'
 import store from './Redux/store'
-// import 'vconsole'
 
 injectTapEventPlugin()
 

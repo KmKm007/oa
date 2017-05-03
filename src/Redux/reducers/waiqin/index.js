@@ -146,6 +146,29 @@ const receiveWaiqinRemarkImageURI = (state, action) => {
   }
 }
 
+const removeWaiqinRemarkImage = state => {
+  return {
+    ...state,
+    remarkImageLocalId: null,
+    remarkImageId: null,
+    remarkImageURL: null
+  }
+}
+
+const removeLocation = state => {
+  return {
+    ...state,
+    location: null
+  }
+}
+
+const removeAddress = state => {
+  return {
+    ...state,
+    address: null
+  }
+}
+
 const waiqinReducers = (state = inititalState, action) => {
   switch(action.type) {
     case actionTypes.RECEIVE_LOCATION:
@@ -174,6 +197,12 @@ const waiqinReducers = (state = inititalState, action) => {
       return receiveWaiqinRemarkImageURI(state, action)
     case actionTypes.BEGIN_UPLOAD_WAIQIN_REMARK_IMAGE:
       return beginUploadWaiqinRemarkImage(state)
+    case actionTypes.REMOVE_WAIQIN_REMARK_IMAGE:
+      return removeWaiqinRemarkImage(state)
+    case actionTypes.REMOVE_LOCATION:
+      return removeLocation(state)
+    case actionTypes.REMOVE_ADDRESS:
+      return removeAddress(state)
     default:
       return state
   }

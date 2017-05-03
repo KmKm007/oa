@@ -7,6 +7,7 @@ import RemarkPage from '../page/waiqin/RemarkPage'
 import SignHistoryPage from '../page/waiqin/SignHistoryPage'
 import WaiqinIntroductionPage from '../page/waiqin/WaiqinIntroductionPage'
 import LoginPage from '../page/common/LoginPage'
+import AppInitialPage from '../page/common/AppInitialPage'
 import store from '../Redux/store'
 
 class AppRouter extends React.Component {
@@ -15,10 +16,11 @@ class AppRouter extends React.Component {
       <Router>
           <div>
             <Route path="/waiqin/sign" component={SignPage}/>
-            <PrivateRoute path="/waiqin/signSucceed" component={SignSucceedPage}/>
+            <Route path="/waiqin/signSucceed" component={SignSucceedPage}/>
             <PrivateRoute path="/waiqin/remark" component={RemarkPage} />
             <PrivateRoute path="/waiqin/childUsers" component={ListChildUserPage}/>
             <PrivateRoute path="/waiqin/history" component={SignHistoryPage}/>
+            <PrivateRoute path="/appInitial" component={AppInitialPage} />
             <Route path="/waiqin/introduction" component={WaiqinIntroductionPage} />
             <Route path="/login" component={LoginPage}></Route>
             <Redirect from="/" to="/login"/>

@@ -21,6 +21,10 @@ export const receiveLocation = location => ({
   location
 })
 
+export const removeLocation = () => ({
+  type: actionTypes.REMOVE_LOCATION
+})
+
 export const requestAddress = location => ({
   type: actionTypes.REQUEST_ADDRESS,
   location
@@ -36,6 +40,10 @@ export const fetchAddress = location => dispatch => {
 export const receiveAddress = location => ({
   type: actionTypes.RECEIVE_ADDRESS,
   location
+})
+
+export const removeAddress = () => ({
+  type: actionTypes.REMOVE_ADDRESS
 })
 
 export const updateCurrentTime = currentTime => ({
@@ -131,4 +139,13 @@ export const fetchWaiqinRemarkImage = userId => dispatch => {
       }, () => {})
     })
   })
+}
+
+export const removeWaiqinRemarkImage = () => ({
+  type: actionTypes.REMOVE_WAIQIN_REMARK_IMAGE
+})
+
+export const removeLocationAndAddress = () => dispatch => {
+  dispatch(removeLocation())
+  dispatch(removeAddress())
 }

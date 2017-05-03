@@ -40,8 +40,8 @@ class SignHistoryHistory extends React.Component {
 
   onShowLocationClick = (longitude, latitude, address) => {
     const locationConfig = {
-      latitude,
-      longitude,
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
       name: '签到位置',
       address,
       scale: 20

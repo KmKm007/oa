@@ -1,0 +1,33 @@
+$baseColor: #333333;
+$lineColor: #f2f2f2;
+$lineColor2: #d7d7d7;
+$baseBackgroudColor: #F4F7FF;
+$fontColor: #868686;
+$borderRadius: 0.5rem;
+
+.full-button {
+  width: 100%;
+  padding: 8px 0;
+  background-color: rgb(71, 103, 150);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.circle-button {
+  background-color: #476796;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 1.5rem;
+  padding: 10px 50px;
+}
+
+.tiny-button {
+  background-color: $baseBackgroudColor;
+  border: $lineColor solid 1px;
+  color: $fontColor;
+  border-radius: $borderRadius;
+  font-size: 0.8rem;
+}

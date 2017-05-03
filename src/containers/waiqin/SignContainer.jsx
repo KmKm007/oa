@@ -14,13 +14,13 @@ class SignContainer extends React.Component {
   }
 
   render () {
-    const { onSignClick, onShowLocationClick, onSearchBtnClick,
-            address } = this.props
+    const { address, onSignClick, onShowLocationClick, onSearchBtnClick, hanleReFetchLocation } = this.props
     const content = address ? (
       <SignBody
         onSignClick={onSignClick}
         onShowLocationClick={onShowLocationClick}
         address={address}
+        onReFetchLocation={hanleReFetchLocation}
       />
     ) : (
       <Loading loadingText="获取位置中..."/>

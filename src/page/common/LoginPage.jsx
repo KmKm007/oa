@@ -16,15 +16,23 @@ class LoginPage extends React.Component {
     userDetail: PropTypes.object
   }
 
+  static defaultProps = {
+    title: '登录'
+  }
+
   componentWillMount() {
-    const userDetail = this.props.userDetail
+    const { title, userDetail } = this.props
+    document.title = title
     if (userDetail) {
-      this.toHomePage()
+      this.toAppInitialPage()
     }
   }
 
   componentDidMount() {
-    const userId = localStorage.getItem('userId')
+    let userId = localStorage.getItem('userId')
+    if (!userId && process.env.NODE_ENV !== 'production') {
+      userId = '5151'
+    }
     if (!userId || userId === 'undefined') {
       this.props.fetchUserCode()
     } else {
@@ -33,34 +41,29 @@ class LoginPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { userCode: currentUserCode, userDetail: currentUserDetail, isInitialSucceed: currentIsInitialSucceed } = this.props
-    const { userCode: nextUserCode, userDetail: nextUserDetail, isInitialSucceed: nextIsInitialSucceed } = nextProps
-    const { fetchUserDetailByCode, fetchWxConfig } = this.props
+    const { userCode: currentUserCode, userDetail: currentUserDetail } = this.props
+    const { userCode: nextUserCode, userDetail: nextUserDetail } = nextProps
+    const { fetchUserDetailByCode } = this.props
     if (currentUserCode !== nextUserCode) {
       return fetchUserDetailByCode(nextUserCode)
-
     }
     if (currentUserDetail !== nextUserDetail && !currentUserDetail) {
       localStorage.setItem('userId', nextUserDetail.userId)
       localStorage.setItem('userIdUpdateTime', Date.now())
-      return fetchWxConfig()
-
-    }
-    if (!currentIsInitialSucceed && nextIsInitialSucceed) {
-      this.toHomePage()
+      this.toAppInitialPage()
     }
   }
 
-  toHomePage = () => {
-    history.replace('/waiqin/sign')
+  toAppInitialPage = () => {
+    history.replace('/appInitial')
   }
 
   render () {
-    const { userDetail, isWxConfigLoading, isUserDetailLoading, errors } = this.props
+    const { userDetail, isUserDetailLoading, errors } = this.props
     if (!userDetail && isUserDetailLoading) {
       return <Loading loadingText="登录中..." />
-    } else if (isWxConfigLoading === true){
-      return <Loading loadingText="应用初始化中..."/>
+    } else if (!userDetail && isUserDetailLoading === false) {
+      return <ErrorMesg errorMesg={'登录失败...'}/>
     }
     const loginError = errors.find(e => e.errorType === actionTypes.RECEIVE_USER_DETAIL_BY_ID_FAILED)
     if (loginError) {
@@ -68,31 +71,15 @@ class LoginPage extends React.Component {
         <ErrorMesg errorMesg={loginError.errorMesg}/>
       )
     }
-    const wxConfigError = errors.find(e => e.errorType === actionTypes.RECEIVE_WX_CONFIG_FAILED)
-    if (wxConfigError) {
-      return (
-        <ErrorMesg errorMesg={wxConfigError.errorMesg}/>
-      )
-    } else {
-      return null
-    }
+    return null
   }
 }
 
 const mapStateToProps = state => ({
   userCode: state.user.userCode,
   userDetail: state.user.detail,
-  wxConfig: {
-    corpid: state.wx.corpid,
-    nonceStr: state.wx.nonceStr,
-    signature: state.wx.signature,
-    url: state.wx.url,
-    timestamp: state.wx.timestamp
-  },
   isUserDetailLoading: state.user.isUserDetailLoading,
-  isWxConfigLoading: state.wx.isWxConfigLoading,
-  isInitialSucceed: state.wx.isInitialSucceed,
-  errors: [ ...state.wx.errors, ...state.user.errors ]
+  errors: state.user.errors
 })
 
 const mapDispatchToProps = dispatch => {
@@ -105,15 +92,6 @@ const mapDispatchToProps = dispatch => {
     },
     fetchUserDetailById: userId => {
       dispatch(actions.fetchUserDetailById(userId))
-    },
-    fetchWxConfig: () => {
-      dispatch(actions.fetchWxConfig())
-    },
-    initialWxSDK: () => {
-      dispatch(actions.wxFetchInitial())
-    },
-    initialWxConfig: config => {
-      dispatch(actions.wxFetchInitial(config))
     }
   }
 }

@@ -31,9 +31,6 @@ const SignSucceedBody = ({ timeObject, address }) => {
           <div>{address}</div>
         </div>
       </div>
-      <div className="sign-succeed-button-container">
-        <button className="share-button">立即分享</button>
-      </div>
     </div>
   )
 }

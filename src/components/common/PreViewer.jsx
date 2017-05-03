@@ -7,7 +7,7 @@ import 'photoswipe/dist/photoswipe.css'
 class PreViewer extends React.Component {
 
   componentDidMount() {
-      var pswpElement = document.querySelectorAll('.pswp')[0]
+      var pswpElement = this.refs.pswp
       const { text, image, handleDestory } = this.props
       var items = [
         {
@@ -39,7 +39,7 @@ class PreViewer extends React.Component {
       <div>
         <button id="btn">Open PhotoSwipe</button>
 
-        <div className="pswp" tabIndex="-1" role="dialog" aria-hidden="true">
+        <div className="pswp" ref="pswp" tabIndex="-1" role="dialog" aria-hidden="true">
 
           <div className="pswp__bg"></div>
 
@@ -81,7 +81,6 @@ class PreViewer extends React.Component {
               </div>
 
             </div>
-
           </div>
 
         </div>

@@ -1,5 +1,6 @@
-import 'whatwg-fetch'
 import apiURL from './apiURL'
+
+window.fetch || require('whatwg-fetch')
 
 const commonErrorMesg = '网络超时！请求失败 >_< '
 

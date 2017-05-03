@@ -1,6 +1,11 @@
 /* Base Application Styles */
 
 $baseColor: #333333;
+$lineColor: #f2f2f2;
+$lineColor2: #d7d7d7;
+$baseBackgroudColor: #F4F7FF;
+$fontColor: #868686;
+$borderRadius: 0.5rem;
 
 @media (max-width: 320px) {
   html {
@@ -26,8 +31,9 @@ $baseColor: #333333;
 
 body {
   color: $baseColor;
-  background: rgb(242, 242, 242);
+  background: $baseBackgroudColor;
   margin: 0;
+  user-select: none;
 }
 
 a {
@@ -60,7 +66,7 @@ ul {
   margin: 20px auto;
   padding: 15px 0;
   text-align: center;
-  border: 1px solid #000;
+  border: 1px solid $lineColor;
   border-width: 1px 0;
   background: #666;
 }
@@ -79,14 +85,17 @@ ul {
 .header {
   display: flex;
   color: #000000;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid $lineColor2;
 }
 
 .headerLeftContainter, .headerRightContainer {
-  flex: 1 1 50px;
+  padding: 0 1.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  a {
+    font-family: 'Microsoft yahei'
+  }
 }
 
 .headerMiddleContainer {
@@ -132,12 +141,13 @@ ul {
 }
 
 .address-container {
-  margin-top: 10vh;
+  margin: 4rem 0;
   flex-direction: column;
 }
 
 .showmap-container {
-  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
 }
 
 .flex-center-container {
@@ -168,8 +178,8 @@ ul {
 .sign-succeed-body {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $lineColor2;
+  padding: 3rem 0;
 }
 
 .sign-succeed-button-container {
@@ -183,13 +193,13 @@ ul {
 }
 
 .sign-succeed-tips {
-  color: red;
+  color: #D38C07;
   font-size: 1rem;
 }
 
 .sign-succeed-info {
+  margin-top: 3rem;
   padding: 10vh 0 0 0;
-  flex-grow: 1;
   display: flex;
   flex-direction: row;
 }
@@ -228,34 +238,42 @@ ul {
   width: 70vw;
   margin: 0 auto;
   display: flex;
-  flex: 2;
   justify-content: center;
   flex-direction: column;
   align-items: stretch;
 }
 
 .remark-photo-container {
-  height: 40vw;
   display: flex;
+  flex-direction: column;
   flex: 1;
   padding-top: 1.5rem;
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .remark-photo-btn {
   width: 100%;
-  height: 100%;
+}
+
+.remark-btn {
+  color: $fontColor;
+  font-size: 1rem;
 }
 
 .remark-text-area {
   width: 100%;
-  height: 40vw;
-  border: 1px solid #ccc;
+  height: 30vw;
+  border: 1px solid $lineColor;
   font-size: 1rem;
 }
 
 .remark-text-container {
-  flex: 1;
   display: flex;
+  margin-top: 10vh;
   flex-direction: column;
   align-items: center;
 }
@@ -265,8 +283,7 @@ ul {
 }
 
 .remark-btn-container {
-  flex: 1;
-  padding-top: 2rem;
+  margin-top: 10vh;
 }
 
 .textarea-no-resize {
@@ -284,11 +301,11 @@ ul {
 }
 
 .btn-showmap {
-  background-color: rgb(71, 103, 150);
+  background-color: #476796;
   border: none;
   color: #fff;
-  font-size: 16px;
-  border-radius: 20px;
+  font-size: 1rem;
+  border-radius: 1.5rem;
   padding: 10px 50px;
 }
 
@@ -315,11 +332,16 @@ ul {
   color: #868686;
   font-size: 1.0rem;
 }
-
+.show-history-myselef-btn {
+  background-color: #fff;
+}
 .show-history-btn {
-  background-color: #ffffff;
+  background-color: $baseBackgroudColor;
+}
+
+.show-history-btn, .show-history-myselef-btn {
   color: #56ACF2;
-  border: 1px solid #56ACF2;
+  border: 1px solid $lineColor;
   padding: 0.2rem 0.8rem;
   border-radius: 0.8rem;
   font-size: 0.8rem;
@@ -329,13 +351,15 @@ ul {
   padding: 2vh 0;
 }
 
+$borderLeftWidth: 1.5vw;
+$paddingLeftBase: 3.5vw;
 .myself-body {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  border-left: 1.5vw solid rgb(71, 103, 150);
-  padding: 2vh 4.5vw 2vh 3.5vw;
+  border-left: $borderLeftWidth solid rgb(71, 103, 150);
+  padding: 2vh 4.5vw 2vh $paddingLeftBase;
 }
 
 .child-list-container {
@@ -348,8 +372,8 @@ ul {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding: 2vh 2vw 1vh 2vw;
-  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid $lineColor;
+  padding: 2vh 4.5vw 2vh $paddingLeftBase + $borderLeftWidth;
 }
 
 .child-body:first-child {
@@ -366,7 +390,7 @@ ul {
   display: flex;
   align-items: center;
   height: 70px;
-  border-bottom: #ccc 1px solid;
+  border-bottom: $lineColor2 1px solid;
 }
 
 .waiqin-history-date-left-container, .waiqin-history-date-right-container {
@@ -408,16 +432,15 @@ ul {
 
 .history-item-container {
   display: flex;
-  margin-bottom: 1.2rem;
-  padding: 0 1.2rem 0.6rem 1.2rem;
+  margin-bottom: 0.125rem;
+  padding: 0 0 0.6rem 0;
 }
 
 .history-item-mesg-container {
-  padding: 0 2rem 1rem 0.5rem;
+  padding: 0 1.4rem 1rem 1.4rem;
   display: flex;
   flex: 1 auto;
   background-color: #ffffff;
-  border-radius: 0.5rem;
 }
 
 .history-item-icon-container {
@@ -450,8 +473,8 @@ ul {
   align-items: center;
   padding-bottom: 0.2rem;
   color: #cc0000;
-  border-bottom: #d0bebe 1px solid;
-  font-size: 1.5rem;
+  border-bottom: $lineColor 1px solid;
+  font-size: 1.2rem;
 }
 
 .history-item-text-address-container {
@@ -471,8 +494,8 @@ ul {
   margin-top: 0.4rem;
   flex: 1;
   div {
-    color: #6f6f6f;
-    font-size: 1rem;
+    color: #bcbcbc;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
   }
@@ -517,4 +540,33 @@ ul {
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+}
+
+.address-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.address-refresh-container {
+  text-align: center;
+}
+
+.refresh-btn {
+  background-color: $baseBackgroudColor;
+  border: $lineColor solid 1px;
+  color: $fontColor;
+  border-radius: $borderRadius;
+  font-size: 0.8rem;
+}
+
+.address-refresh-btn {
+  @extend .refresh-btn;
+}
+
+.remark-photo-re-container {
+  margin-top: 0.2rem;
+}
+
+.remark-photo-re-btn {
+  @extend .refresh-btn;
 }

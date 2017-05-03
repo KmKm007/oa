@@ -1,5 +1,7 @@
 import wx from 'weixin-js-sdk'
-import { getQueryString } from '../utils/urlUtil'
+import {
+  getQueryString
+} from '../utils/urlUtil'
 
 const dubug = (process.env.NODE_ENV !== 'production') ? true : false
 
@@ -10,8 +12,8 @@ export const inital = (config, callback) => {
     timestamp: config.timestamp,
     nonceStr: config.nonceStr,
     signature: config.signature,
-    // jsApiList: config.jsApiList,
-    jsApiList: ['getLocation', 'openLocation']
+    jsApiList: ['getLocation', 'openLocation', 'hideOptionMenu',
+                'hideMenuItems', 'hideAllNonBaseMenuItem', 'onMenuShareAppMessage']
   })
   wx.ready(() => {
     callback()
@@ -68,5 +70,28 @@ export const previewImage = imageArray => {
   wx.previewImage({
     current: imageArray[0],
     urls: imageArray
+  })
+}
+
+export const hideOptionMenu = () => {
+  wx.hideOptionMenu()
+}
+
+export const hideMenuItems = () => {
+  wx.hideMenuItems()
+}
+
+export const hideAllNonBaseMenuItem = () => {
+  wx.hideAllNonBaseMenuItem()
+}
+
+export const onMenuShareAppMessage = (shareConfig) => {
+  wx.onMenuShareAppMessage({
+    title: shareConfig.title,
+    desc: shareConfig.desc,
+    link: shareConfig.link,
+    imgUrl: shareConfig.imgUrl,
+    success: shareConfig.success,
+    cancel: shareConfig.cancel
   })
 }

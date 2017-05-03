@@ -26,7 +26,10 @@ class WaiqinPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchLocation()
+    const address = this.props.address
+    if (!address) {
+      this.props.fetchLocation()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,7 +45,7 @@ class WaiqinPage extends React.Component {
 
     const { fetchAddress } = this.props
 
-    if (currentLocation !== nextLocation) {
+    if (currentLocation !== nextLocation && !currentLocation) {
       fetchAddress(nextLocation)
     }
 
@@ -72,6 +75,12 @@ class WaiqinPage extends React.Component {
     history.push('/waiqin/childUsers')
   }
 
+
+  hanleReFetchLocation = () => {
+    this.props.removeLocationAndAddress()
+    this.props.fetchLocation()
+  }
+
   render() {
     const { location, address, isSigning, errors } = this.props
 
@@ -84,6 +93,7 @@ class WaiqinPage extends React.Component {
         onSignClick={this.onSignClick}
         onSearchBtnClick={this.onSearchBtnClick}
         errors={errors}
+        hanleReFetchLocation={this.hanleReFetchLocation}
       />
     )
   }
@@ -115,6 +125,9 @@ const dispatchToProps = dispatch => ({
   },
   fetchAddress: location => {
     dispatch(actions.fetchAddress(location))
+  },
+  removeLocationAndAddress: () => {
+    dispatch(actions.removeLocationAndAddress())
   }
 })
 

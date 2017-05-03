@@ -11,7 +11,7 @@ const ListChildUserHeader = ({ userDetail, onUserClick }) => {
             <span className="child-position">{`(${userDetail.position})`}</span>
           </div>
           <div>
-            <button className="show-history-btn" onClick={() => onUserClick(userDetail.userId, '我')}>查看</button>
+            <button className="show-history-myselef-btn" onClick={() => onUserClick(userDetail.userId, '我')}>查看</button>
           </div>
         </div>
       </div>
